@@ -99,3 +99,36 @@ class Profile(models.Model):
         blank=True,
         related_name="family_members",
     )
+
+
+class FamilyInvitation(models.Model):
+    MAX_EMAIL_LENGTH = 150
+    MESSAGE_MAX_LENGTH = 150
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    message = models.TextField(
+        max_length=MESSAGE_MAX_LENGTH,
+        null=True,
+        blank=True,
+    )
+
+    family = models.ForeignKey(
+        Family,
+        on_delete=models.DO_NOTHING,
+    )
+    invited_by = models.ForeignKey(
+        AppUser,
+        on_delete=models.DO_NOTHING,
+    )
+    invitee_email = models.CharField(
+        max_length=MAX_EMAIL_LENGTH,
+        null=False,
+        blank=False,
+    )
+    status = models.CharField(max_length=20, choices=(
+    ('pending', 'Pending'), ('accepted', 'Accepted'), ('declined', 'Declined')), default='pending')
+
+    class Meta:
+        verbose_name_plural = "Family Invitations"
+        unique_together = ['family', 'invitee_email']
+        ordering = ['-created_at']

@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth import get_user_model
 from django.contrib.auth import admin as auth_admin
 
-from .forms import AccountUserCreationForm, AccountUserChangeForm
+from .forms import AppUserCreationForm, AppUserChangeForm
 
 UserModel = get_user_model()
 
@@ -13,8 +13,8 @@ class UserModelAdmin(auth_admin.UserAdmin):
     search_fields = ("email",)
     ordering = ("email",)
 
-    form = AccountUserChangeForm
-    add_form = AccountUserCreationForm
+    form = AppUserChangeForm
+    add_form = AppUserCreationForm
 
     fieldsets = (
         (None, {"fields": ("email", "password")}),

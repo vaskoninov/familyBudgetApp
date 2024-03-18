@@ -1,37 +1,44 @@
 from django.contrib.auth import forms as auth_forms, get_user_model
 from django import forms
+from django.core.exceptions import ValidationError
 
-from .models import Profile
+from .models import Profile, FamilyInvitation
 
 UserModel = get_user_model()
 
 
-class AccountUserChangeForm(auth_forms.UserChangeForm):
+class AppUserChangeForm(auth_forms.UserChangeForm):
     class Meta(auth_forms.UserChangeForm.Meta):
         model = UserModel
         fields = '__all__'
 
 
-class AccountUserCreationForm(auth_forms.UserCreationForm):
-    first_name = forms.CharField()
-    last_name = forms.CharField()
-    age = forms.IntegerField()
+class AppUserCreationForm(auth_forms.UserCreationForm):
 
     class Meta(auth_forms.UserCreationForm.Meta):
         model = UserModel
-        fields = (UserModel.USERNAME_FIELD,)
+        fields = (UserModel.USERNAME_FIELD, 'password1', 'password2')
 
-    def save(self, commit=True):
-        user = super().save(commit=commit)
 
-        profile = Profile(
-            user=user,
-            age=self.cleaned_data["age"],
-            first_name=self.cleaned_data["first_name"],
-            last_name=self.cleaned_data["last_name"],
-        )
+class FamilyInvitationForm(forms.ModelForm):
+    class Meta:
+        model = FamilyInvitation
+        fields = ['invitee_email']
 
-        if commit:
-            profile.save()
+    def clean_invitee_email(self):
+        invitee_email = self.cleaned_data.get('invitee_email')
+        family = self.instance.family
 
-        return user
+        try:
+            invitee = UserModel.objects.get(email=invitee_email)
+        except UserModel.DoesNotExist:
+            raise ValidationError('User does not exist.')
+
+        if invitee.profile.family:
+            raise ValidationError('User already has a family.')
+
+        if FamilyInvitation.objects.filter(family=family, invitee_email=invitee_email).exists():
+            raise ValidationError('Invitation already sent to this email address.')
+
+        # If everything is fine, return the cleaned data
+        return invitee_email
