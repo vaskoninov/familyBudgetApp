@@ -7,5 +7,5 @@ urlpatterns = [
     path('', include('familyBudgetApp.web.urls')),
     path('accounts/', include('familyBudgetApp.accounts.urls')),
     path('common/', include('familyBudgetApp.common.urls')),
-    path('budgetApp/', include('familyBudgetApp.budgetApp.urls')),
+    path('budget-app/', include('familyBudgetApp.budgetApp.urls')),
 ]
