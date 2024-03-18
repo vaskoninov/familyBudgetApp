@@ -34,7 +34,6 @@ class AppUser(auth_models.AbstractBaseUser, auth_models.PermissionsMixin):
     )
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
 
     objects = AppUserManager()
 

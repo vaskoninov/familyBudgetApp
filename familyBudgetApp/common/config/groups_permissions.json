@@ -1,0 +1,33 @@
+[
+  {
+    "group": "BaseFunctions",
+    "permissions": [
+      "accounts.add_family",
+      "budgetApp.add_budgetitem",
+      "budgetApp.change_budgetitem",
+      "budgetApp.delete_budgetitem",
+      "budgetApp.view_budgetitem",
+      "budgetApp.add_monthlybudget",
+      "budgetApp.change_monthlybudget",
+      "budgetApp.delete_monthlybudget",
+      "budgetApp.view_monthlybudget",
+      "budgetApp.add_yearlybudget",
+      "budgetApp.change_yearlybudget",
+      "budgetApp.delete_yearlybudget",
+      "budgetApp.view_yearlybudget",
+      "common.add_tag",
+      "common.view_tag"
+    ]
+  },
+  {
+    "group": "FamilyAdmin",
+    "permissions": [
+      "accounts.change_family",
+      "accounts.delete_family",
+      "accounts.add_familyinvitation",
+      "accounts.change_familyinvitation",
+      "accounts.delete_familyinvitation",
+      "accounts.view_familyinvitation"
+    ]
+  }
+]

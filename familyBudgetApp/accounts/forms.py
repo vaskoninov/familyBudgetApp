@@ -17,7 +17,7 @@ class AppUserCreationForm(auth_forms.UserCreationForm):
 
     class Meta(auth_forms.UserCreationForm.Meta):
         model = UserModel
-        fields = (UserModel.USERNAME_FIELD, 'password1', 'password2')
+        fields = (UserModel.USERNAME_FIELD,)
 
 
 class FamilyInvitationForm(forms.ModelForm):

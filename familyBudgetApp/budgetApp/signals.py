@@ -23,9 +23,7 @@ def capture_old_instance_state(sender, instance, **kwargs):
 
 @receiver(pre_save, sender=BudgetItem)
 def link_budget_item_to_monthly_budget(sender, instance, **kwargs):
-    print('Signal triggered for BudgetItem')
     if not instance.monthly_budget_id:
-        print('monthly_budget_id not set, setting it now')
         year = instance.date.year
         month = instance.date.month
         user = instance.user
@@ -39,8 +37,6 @@ def link_budget_item_to_monthly_budget(sender, instance, **kwargs):
         )
 
         instance.monthly_budget = monthly_budget
-    else:
-        print('monthly_budget_id already set')
 
 
 @receiver(post_save, sender=BudgetItem)
