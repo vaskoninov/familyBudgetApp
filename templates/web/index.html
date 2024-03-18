@@ -4,4 +4,7 @@
 	<h1>Home</h1>
 	<p>Welcome to the home page</p>
 	<p>Logged user: {{ user }}</p>
+	
+	<a class="btn button-primary" href="{% url 'create_budget_item' %}">Create budget item</a>
+	
 {% endblock %}

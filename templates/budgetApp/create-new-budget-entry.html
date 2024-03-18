@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block main_content %}
+
+<form method="post" action="{% url 'create_budget_item' %}">
+	{{ form.as_p }}
+	{% csrf_token %}
+	<button type="submit">Submit</button>
+</form>
+
+{% endblock %}
