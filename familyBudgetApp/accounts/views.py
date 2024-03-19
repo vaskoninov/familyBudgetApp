@@ -168,7 +168,7 @@ class AcceptFamilyInvitationView(LoginRequiredMixin, RefererURLMixin, views.Upda
         """Ensure the invitation exists and is for the current user."""
         invitation = super().get_object(queryset)
         if invitation.invitee_email != self.request.user.email:
-            messages.info("Invitation not found or not for this user.")
+            messages.info(self.request, "Invitation not found or not for this user.")
             return redirect(self.get_success_url())
         return invitation
 
@@ -180,7 +180,7 @@ class AcceptFamilyInvitationView(LoginRequiredMixin, RefererURLMixin, views.Upda
         invitation = form.save(commit=False)
 
         if invitation.status != 'pending':
-            messages.info('Invitation has already been accepted or rejected.')
+            messages.info(self.request, 'Invitation has already been accepted or rejected.')
             return redirect(self.get_success_url())
 
         invitation.status = 'accepted'
@@ -193,10 +193,10 @@ class AcceptFamilyInvitationView(LoginRequiredMixin, RefererURLMixin, views.Upda
         return super().form_valid(form)
 
 
-class DeclineFamilyInvitationView(LoginRequiredMixin, RefererURLMixin, generic.UpdateView):
+class DeclineFamilyInvitationView(LoginRequiredMixin, RefererURLMixin, views.UpdateView):
     model = FamilyInvitation
     fields = []
-    template_name = 'accounts/decline_invitation.html'
+    template_name = 'accounts/decline-invitation.html'
 
     def get_success_url(self):
         user_id = self.request.user.pk
@@ -205,7 +205,7 @@ class DeclineFamilyInvitationView(LoginRequiredMixin, RefererURLMixin, generic.U
     def form_valid(self, form):
         invitation = form.save(commit=False)
         if invitation.status != 'pending':
-            messages.info('Invitation has already been accepted or rejected.')
+            messages.info(self.request, 'Invitation has already been accepted or rejected.')
             return redirect(self.get_success_url())
 
         invitation.status = 'declined'
@@ -225,7 +225,7 @@ class DeleteFamilyInvitationView(LoginRequiredMixin, RefererURLMixin, views.Dele
         """Ensure the invitation exists and is for the current user."""
         invitation = super().get_object(queryset)
         if invitation.invited_by.email != self.request.user.email:
-            messages.info("You did not send this invitation. You cannot delete it.")
+            messages.info(self.request, "You did not send this invitation. You cannot delete it.")
             return redirect(self.get_success_url())
         return invitation
 
