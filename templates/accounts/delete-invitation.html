@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block main_content %}
+	<h2>Are you sure you want to delete the invitation you sent?</h2>
+	<form action="{% url 'delete-invitation' pk=object.pk %}" method="post">
+	{{ form }}
+	{% csrf_token %}
+	<button>Confirm</button>
+	</form>
+	<a href="{{ referer_url }}" class="btn btn-secondary">Back</a>
+{% endblock %}

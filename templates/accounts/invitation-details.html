@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block main_content %}
+	<p>Sender: {{ object.invited_by }}</p>
+	<p>Invitee: {{ object.invitee_username }}</p>
+	<p>Family: {{ object.family }}</p>
+	<p>Status: {{ object.status }}</p>
+	
+	{% if object.invitee_username == user.username %}
+	<a class="btn btn-primary" href="{% url 'accept-invitation' pk=object.pk %}">Accept</a>
+	<a class="btn btn-danger" href="{% url 'decline-invitation' pk=object.pk %}">Decline</a>
+	{% endif %}
+	<a href="{{ referer_url }}">Go back</a>
+{% endblock %}

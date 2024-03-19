@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block main_content %}
+  <h2>Admin Remove User from Family</h2>
+  <form method="post" action="{% url 'remove-family-user' pk=object.pk %}">
+    {% csrf_token %}
+    <p>Are you sure you want to remove this user from your family?</p>
+    <button type="submit">Confirm</button>
+  </form>
+{% endblock %}

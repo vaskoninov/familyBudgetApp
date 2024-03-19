@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block main_content %}
+	<h2>Are you sure you want to delete your account?</h2>
+	<form action="{% url 'delete-user' pk=user.pk%}" method="post">
+	{{ form }}
+	{% csrf_token %}
+	<button>Confirm</button>
+	</form>
+	<a href="{{ referer_url }}" class="btn btn-secondary">Back</a>
+{% endblock %}

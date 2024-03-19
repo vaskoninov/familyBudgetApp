@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block main_content %}
+	<p>Do you accept the invitation?</p>
+	<form action="{% url 'accept-invitation' pk=object.pk %}" method="post">
+		{% csrf_token %}
+		{{ form.as_p }}
+	<button>Accept</button>
+	</form>
+	<a href="{{ referer_url }}">Go back</a>
+{% endblock %}

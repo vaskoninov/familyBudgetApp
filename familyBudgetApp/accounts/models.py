@@ -66,6 +66,9 @@ class Family(models.Model):
     class Meta:
         verbose_name_plural = "Families"
 
+    def __str__(self):
+        return f'{self.name} family with {self.family_members.count()} members and {self.admin} admin.'
+
 
 class Profile(models.Model):
     FIRST_NAME_MAX_LENGTH = 30

@@ -1,0 +1,10 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h2>Leave Family</h2>
+  <form method="post" action="{% url 'leave-family' pk=object.pk %}">
+    {% csrf_token %}
+    <p>Are you sure you want to leave your family?</p>
+    <button type="submit">Confirm</button>
+  </form>
+{% endblock %}
