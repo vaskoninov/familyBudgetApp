@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+{% block main_content %}
+	<div class="container text-center">
+		<h1 class="display-4 mt-5">Welcome to the Family Budget App</h1>
+		<p class="lead">You are not logged in</p>
+
+		<div class="row">
+			<div class="col-md-6">
+				<a href="{% url 'register-new-user' %}" class="btn btn-primary btn-lg">Register</a>
+			</div>
+			<div class="col-md-6">
+				<a href="{% url 'login-user' %}" class="btn btn-primary btn-lg">Login</a>
+			</div>
+		</div>
+{% endblock %}

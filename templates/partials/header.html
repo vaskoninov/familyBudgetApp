@@ -20,8 +20,10 @@
 								Actions
 							</a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a class="btn button-primary" href="{% url 'create_budget_item' %}">Create budget
+								<a class="btn button-primary" href="{% url 'create-budget-item' %}">Create budget
 									item</a>
+								<a class="btn button-primary" href="{% url 'list-budget-items' %}">List budget
+									items</a>
 							</ul>
 						</li>
 						<a class="nav-link" href="{% url 'user-details' pk=user.id %}">Profile</a>

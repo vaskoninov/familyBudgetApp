@@ -31,3 +31,26 @@ class BudgetItemForm(forms.ModelForm):
                     instance.tags.add(tag)
 
         return instance
+
+
+class UpdateBudgetItemForm(BudgetItemForm):
+    class Meta(BudgetItemForm.Meta):
+        model = BudgetItem
+        exclude = ['user', 'monthly_budget', 'item_type']
+        widgets = {
+            'date': forms.DateInput(attrs={'type': 'date'}),
+        }
+
+
+class FilterBudgetItemTypeForm(forms.Form):
+    CHOICES = [
+        ('', 'All'),
+        ('EXPENSE', 'Expense'),
+        ('INCOME', 'Income'),
+    ]
+
+    category = forms.ChoiceField(choices=CHOICES, required=False)
+
+
+class FilterBudgetItemNameForm(forms.Form):
+    title = forms.CharField(max_length=100, required=False)

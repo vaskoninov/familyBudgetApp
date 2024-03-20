@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+
+{% block main_content %}
+	<form method="get">
+		{{ filter_form.as_p }}
+		<button type="submit">Filter</button>
+	</form>
+	<form method="GET">
+		{% tags_available %}
+		{% csrf_token %}
+		<button type="submit">Filter Tags</button>
+	</form>
+	<form method="GET" action="{% url 'list-budget-items' %}">
+		<div class="input-group mb-3">
+			<input type="text" name="name" class="form-control" placeholder="Search by name">
+			<div class="input-group-append">
+				<button class="btn btn-outline-secondary" type="submit">Search</button>
+			</div>
+		</div>
+	</form>
+	{#	{{ fig|safe }}#}
+
+	<div class="container-fluid">
+		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+			{% for item in budget_items %}
+				{% include 'partials/item-card.html' with item=item url_name='view-budget-item-details' %}
+			{% empty %}
+				<p>No budget entries</p>
+			{% endfor %}
+		</div>
+	</div>
+
+	{% if page_obj.paginator.count > 5 %}
+		<div class="pagination d-flex justify-content-center">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+	        <a href="?page={{ page_obj.previous_page_number }}">&larr;</a>
+        {% else %}
+	        <span class="disabled">&larr;</span>
+        {% endif %}
+
+	    <span class="current">
+            {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+        </span>
+
+	    {% if page_obj.has_next %}
+		    <a href="?page={{ page_obj.next_page_number }}">&rarr;</a>
+	    {% else %}
+		    <span class="disabled">&rarr;</span>
+	    {% endif %}
+    </span>
+		</div>
+	{% endif %}
+
+
+{% endblock %}

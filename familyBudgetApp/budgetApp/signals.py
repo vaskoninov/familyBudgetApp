@@ -16,6 +16,8 @@ def capture_old_instance_state(sender, instance, **kwargs):
     if instance.pk:
         try:
             old_instance = sender.objects.get(pk=instance.pk)
+            if not hasattr(__old_instance_cache, 'cache'):
+                __old_instance_cache.cache = {}
             __old_instance_cache.cache[instance.pk] = old_instance
         except sender.DoesNotExist:
             pass

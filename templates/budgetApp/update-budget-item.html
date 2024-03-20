@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block main_content %}
+    <h2>Update this {{ object.name|lower }}</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{form}}
+        <button type="submit" class="btn btn-success">Update</button>
+        <a href="{{ referer_url }}" class="btn btn-secondary">Back</a>
+    </form>
+	
+{% endblock %}

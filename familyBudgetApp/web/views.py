@@ -11,7 +11,7 @@ class IndexView(views.TemplateView):
 
     def get(self, request, *args, **kwargs):
         if not request.user.is_authenticated:
-            return render(request, 'web/new-user-index.html')
+            return render(request, 'web/not-logged-user.html')
         return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

@@ -1,0 +1,6 @@
+<select name="tag">
+    <option value="">All</option>
+    {% for tag in tags %}
+        <option value="{{ tag.id }}">{{ tag.name }}</option>
+    {% endfor %}
+</select>
