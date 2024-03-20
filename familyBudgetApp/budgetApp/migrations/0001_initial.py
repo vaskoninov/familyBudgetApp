@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
             name='YearlyBudget',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('year', models.IntegerField(default=familyBudgetApp.common.helpers.current_year)),
+                ('year', models.IntegerField(default=familyBudgetApp.common.helpers.get_current_year)),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to=settings.AUTH_USER_MODEL)),
             ],
         ),
@@ -43,7 +43,7 @@ class Migration(migrations.Migration):
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('balance', models.DecimalField(decimal_places=2, default=0, max_digits=10)),
                 ('last_month_balance', models.DecimalField(decimal_places=2, default=0, max_digits=10)),
-                ('month', models.IntegerField(default=familyBudgetApp.common.helpers.current_month)),
+                ('month', models.IntegerField(default=familyBudgetApp.common.helpers.get_current_month)),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to=settings.AUTH_USER_MODEL)),
                 ('yearly_budget', models.ForeignKey(on_delete=django.db.models.deletion.DO_NOTHING, to='budgetApp.yearlybudget')),
             ],

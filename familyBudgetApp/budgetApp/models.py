@@ -1,14 +1,14 @@
 from django.contrib.auth import get_user_model
 from django.db import models
 
-from familyBudgetApp.common.helpers import current_year, current_month, get_previous_month_and_year
+from familyBudgetApp.common.helpers import get_current_year, get_current_month, get_previous_month_and_year
 from familyBudgetApp.common.models import Tag
 
 UserModel = get_user_model()
 
 
 class YearlyBudget(models.Model):
-    year = models.IntegerField(default=current_year)
+    year = models.IntegerField(default=get_current_year)
     user = models.ForeignKey(UserModel, on_delete=models.DO_NOTHING)
 
     @property
@@ -19,7 +19,7 @@ class YearlyBudget(models.Model):
 class MonthlyBudget(models.Model):
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     last_month_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
-    month = models.IntegerField(default=current_month)
+    month = models.IntegerField(default=get_current_month)
     user = models.ForeignKey(UserModel, on_delete=models.DO_NOTHING)
     yearly_budget = models.ForeignKey(
         YearlyBudget,

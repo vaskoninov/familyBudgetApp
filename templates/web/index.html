@@ -5,6 +5,15 @@
 	<p>Welcome to the home page</p>
 	<p>Logged user: {{ user }}</p>
 	
+	<p>Monthly Budget Balance: {{ budget_balance }}</p>
+	
+	<div class="container">
+    <div class="row">
+        {% include 'partials/last-five-per-month.html' with title='incomes' item_type='INCOME' url_name='income-details' %}
+        {% include 'partials/last-five-per-month.html' with title='expenses' item_type='EXPENSE' url_name='expense-details' %}
+    </div>
+</div>
+	
 	<a class="btn button-primary" href="{% url 'create_budget_item' %}">Create budget item</a>
 	
 {% endblock %}

@@ -1,0 +1,13 @@
+{% load my_tags %}
+<div class="col">
+    <div class="card">
+        <div class="card-header">
+            <h2 class="card-title">Last five {{ title }} for {{ month|month_name }} {{ year }}</h2>
+        </div>
+        <div class="card-body">
+            <div class="col-12">
+                {% last_five item_type=item_type url_name=url_name %}
+            </div>
+        </div>
+    </div>
+</div>

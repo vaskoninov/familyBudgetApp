@@ -1,0 +1,7 @@
+{% for item in last_five %}
+<div class="mb-3">
+    {% include 'partials/item-card.html' with item=item url_name=url_name %}
+</div>
+{% empty %}
+<p>No budget items</p>
+{% endfor %}
