@@ -27,7 +27,6 @@ class FamilyInvitationForm(forms.ModelForm):
 
     def clean_invitee_email(self):
         invitee_email = self.cleaned_data.get('invitee_email')
-        family = self.instance.family
 
         try:
             invitee = UserModel.objects.get(email=invitee_email)
@@ -36,9 +35,6 @@ class FamilyInvitationForm(forms.ModelForm):
 
         if invitee.profile.family:
             raise ValidationError('User already has a family.')
-
-        if FamilyInvitation.objects.filter(family=family, invitee_email=invitee_email).exists():
-            raise ValidationError('Invitation already sent to this email address.')
 
         # If everything is fine, return the cleaned data
         return invitee_email

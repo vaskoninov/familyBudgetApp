@@ -5,7 +5,7 @@
 	<ul>
 		{% for member in family_members %}
 			<li>{{ member }}
-			        {% if not user|has_group:"FamilyAdmin" %}<a href="{% url 'remove-family-user' pk=member.pk %}" class="btn btn-danger">Remove from
+			        {% if user|has_group:"FamilyAdmin" %}<a href="{% url 'remove-family-user' pk=member.pk %}" class="btn btn-danger">Remove from
 			            family</a>{% endif %}</li>
 		{% endfor %}
 	</ul>

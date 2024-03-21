@@ -24,10 +24,11 @@ class IndexView(views.TemplateView):
         context['year'] = year
         context['month'] = month
 
-        yearly_budget = YearlyBudget.objects.filter(user=user, year=year).first()
-        monthly_budget = MonthlyBudget.objects.filter(user=user, month=month, yearly_budget=yearly_budget).first()
+        context['years'] = YearlyBudget.objects.filter(user=user).values_list('year', flat=True)
+        monthly_budget = MonthlyBudget.objects.filter(user=user, month=month, yearly_budget__year=year).first()
         if monthly_budget:
             context['budget_balance'] = monthly_budget.balance
+            context['monthly_budget'] = monthly_budget
         else:
             context['budget_balance'] = 0
 

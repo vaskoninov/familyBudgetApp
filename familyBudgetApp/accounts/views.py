@@ -142,7 +142,7 @@ class SendFamilyInvitationView(LoginRequiredMixin, RefererURLMixin, PermissionRe
 
     def get_success_url(self):
         user_id = self.request.user.pk
-        return reverse_lazy('user-profile', kwargs={"pk": user_id})
+        return reverse_lazy('user-details', kwargs={"pk": user_id})
 
     def form_valid(self, form):
         invitation = form.save(commit=False)
@@ -174,7 +174,7 @@ class AcceptFamilyInvitationView(LoginRequiredMixin, RefererURLMixin, views.Upda
 
     def get_success_url(self):
         user_id = self.request.user.pk
-        return reverse_lazy('user-profile', kwargs={"pk": user_id})
+        return reverse_lazy('user-details', kwargs={"pk": user_id})
 
     def form_valid(self, form):
         invitation = form.save(commit=False)

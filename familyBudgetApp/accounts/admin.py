@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import admin as auth_admin
 
 from .forms import AppUserCreationForm, AppUserChangeForm
+from .models import Profile
 
 UserModel = get_user_model()
 
@@ -33,3 +34,8 @@ class UserModelAdmin(auth_admin.UserAdmin):
             },
         ),
     )
+
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin):
+    pass

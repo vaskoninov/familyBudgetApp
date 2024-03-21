@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% block main_content %}
-	<form action="{% url 'send-invitation' %}" method="post">
+	<form action="{% url 'send-family-invitation' %}" method="post">
 		{% csrf_token %}
 		{{ form.as_p }}
 		<input type="submit" value="Send">

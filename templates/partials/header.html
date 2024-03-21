@@ -22,15 +22,15 @@
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 								<a class="btn button-primary" href="{% url 'create-budget-item' %}">Create budget
 									item</a>
-								<a class="btn button-primary" href="{% url 'list-budget-items' %}">List budget
-									items</a>
 							</ul>
 						</li>
+						<a class="btn button-primary" href="{% url 'list-budget-items' %}">Personal Entries</a>
+						{% if user.profile.family %}
+							<a class="btn button-primary" href="{% url 'family-list-budget-items' %}">Family Entries</a>
+						{% endif %}
 						<a class="nav-link" href="{% url 'user-details' pk=user.id %}">Profile</a>
 						<a class="nav-link" href="{% url 'logout-user-confirmation' %}">Logout</a>
 						</li>
-						{% if user.profile.family %}
-						{% endif %}
 					{% else %}
 						<li class="navbar-item">
 							<a class="nav-link" href="{% url 'register-new-user' %}">Register</a>

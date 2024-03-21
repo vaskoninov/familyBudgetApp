@@ -1,3 +1,6 @@
+from django.shortcuts import redirect
+
+
 class RefererURLMixin:
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -59,3 +62,11 @@ class TagFilterMixin:
         queryset = super().get_queryset()
         queryset = self.apply_tag_filter(queryset)  # Apply tag filter
         return queryset
+
+
+class UserIsCreatorMixin:
+    def dispatch(self, request, *args, **kwargs):
+        obj = self.get_object()
+        if obj.user != request.user:
+            return redirect('index')
+        return super().dispatch(request, *args, **kwargs)

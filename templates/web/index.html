@@ -1,19 +1,32 @@
 {% extends 'base.html' %}
-
+{% load my_tags %}
 {% block main_content %}
-	<h1>Home</h1>
-	<p>Welcome to the home page</p>
+
+	<div class="container mb-3">
+		<ul class="nav">
+			<li class="nav-item"><a class='nav-link'>Years</a></li>
+			{% for year in years %}
+				<li class="nav-item"><a class='nav-link'
+				                        href="#">{{ year }}</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+
 	<p>Logged user: {{ user }}</p>
-	
-	<p>Monthly Budget Balance: {{ budget_balance }}</p>
-	
+	{% if monthly_budget %}
+		<p class="text-center display-4 mb-3"> {{ user }} balance
+			for {{ monthly_budget.month|month_name }}/{{ monthly_budget.yearly_budget.year }}: {{ budget_balance }}</p>
+	{% endif %}
+
+
 	<div class="container">
-    <div class="row">
-        {% include 'partials/last-five-per-month.html' with title='incomes' item_type='INCOME' url_name='view-budget-item-details' %}
-        {% include 'partials/last-five-per-month.html' with title='expenses' item_type='EXPENSE' url_name='view-budget-item-details' %}
-    </div>
-</div>
-	
-	
-	
+		<div class="row">
+			{% include 'partials/last-five-per-month.html' with title='incomes' item_type='INCOME' url_name='view-budget-item-details' %}
+			{% include 'partials/last-five-per-month.html' with title='expenses' item_type='EXPENSE' url_name='view-budget-item-details' %}
+		</div>
+	</div>
+
+
+
 {% endblock %}

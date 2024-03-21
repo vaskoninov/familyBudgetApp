@@ -1,4 +1,6 @@
+
 from django.utils import timezone
+
 
 
 def get_current_year():
@@ -13,3 +15,9 @@ def get_previous_month_and_year(month, year):
     previous_month = month - 1 if month != 1 else 12
     previous_year = year if month != 1 else year - 1
     return previous_month, previous_year
+
+
+def get_users_from_family(family):
+    return family.family_members.all().values_list('user', flat=True)
+
+

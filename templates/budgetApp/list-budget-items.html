@@ -2,6 +2,9 @@
 {% load my_tags %}
 
 {% block main_content %}
+	{% if family %}
+	<h1>{{ family }}</h1>
+	{% endif %}
 	<form method="get">
 		{{ filter_form.as_p }}
 		<button type="submit">Filter</button>
