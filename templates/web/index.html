@@ -1,31 +1,49 @@
 {% extends 'base.html' %}
 {% load my_tags %}
 {% block main_content %}
-
+	
+	{% if not profile %}
+	<div class="container">
+		<div class="alert alert-warning" role="alert">
+			<p class="text-center mb-3">Please fill in your profile details!</p>
+			<p class="text-center"><a class="btn btn-primary" href="{% url 'user-profile-update' pk=user.pk%}">Update Your Profile</a></p>
+		</div>
+	</div>
+	{% endif %}
+	
+	
 	<div class="container mb-3">
 		<ul class="nav">
-			<li class="nav-item"><a class='nav-link'>Years</a></li>
+			<li class="nav-item"><a class='nav-link'>Personal Budgets By Years</a></li>
 			{% for year in years %}
 				<li class="nav-item"><a class='nav-link'
-				                        href="#">{{ year }}</a>
+				                        href="{% url 'yearly-budget' pk=year.pk year=year.year %}">{{ year.year }}</a>
 				</li>
+			{% empty %}
+				<li class="nav-item"><a class='nav-link'>No budgets entered yet!</a></li>
 			{% endfor %}
 		</ul>
 	</div>
 
 	<p>Logged user: {{ user }}</p>
 	{% if monthly_budget %}
-		<p class="text-center display-4 mb-3"> {{ user }} balance
+		<p class="text-center display-4 mb-3"> {{ user.profile.first_name }} balance
 			for {{ monthly_budget.month|month_name }}/{{ monthly_budget.yearly_budget.year }}: {{ budget_balance }}</p>
-	{% endif %}
 
 
-	<div class="container">
-		<div class="row">
-			{% include 'partials/last-five-per-month.html' with title='incomes' item_type='INCOME' url_name='view-budget-item-details' %}
-			{% include 'partials/last-five-per-month.html' with title='expenses' item_type='EXPENSE' url_name='view-budget-item-details' %}
+
+		<div class="container">
+			<div class="row">
+				{% include 'partials/last-five-per-month.html' with title='incomes' item_type='INCOME' url_name='view-budget-item-details' %}
+				{% include 'partials/last-five-per-month.html' with title='expenses' item_type='EXPENSE' url_name='view-budget-item-details' %}
+			</div>
 		</div>
-	</div>
+	{% else %}
+		<p class="text-center display-4">Still no budget items entered!</p>
+		<p class="text-center display-4"><a class="btn btn-primary" href="{% url 'create-budget-item' %}">Create your
+			first budget item!</a></p>
+
+	{% endif %}
 
 
 

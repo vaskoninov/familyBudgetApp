@@ -15,6 +15,8 @@ class YearlyBudget(models.Model):
     def yearly_budget(self):
         return self.monthly_budgets.aggregate(models.Sum('balance'))['balance__sum']
 
+    def __str__(self):
+        return f"Yearly Budget for {self.year}"
 
 class MonthlyBudget(models.Model):
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)

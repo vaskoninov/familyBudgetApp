@@ -8,4 +8,6 @@ urlpatterns = (
     path('budget-item/<int:pk>/delete/', views.DeleteBudgetItemView.as_view(), name='delete-budget-item'),
     path('list-budget-items/', views.BudgetItemListView.as_view(), name='list-budget-items'),
     path('family-list-budget-items/', views.FamilyBudgetItemListView.as_view(), name='family-list-budget-items'),
+    path('<int:pk>/yearly-budget/<int:year>/', views.ViewYearBudgetsByYear.as_view(), name='yearly-budget'),
+    path('<int:pk>/monthly-budget/<int:year>/<int:month>/', views.ViewMonthlyBudgetDetails.as_view(), name='monthly-budget'),
 )

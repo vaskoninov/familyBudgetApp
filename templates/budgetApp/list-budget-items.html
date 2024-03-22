@@ -3,7 +3,7 @@
 
 {% block main_content %}
 	{% if family %}
-	<h1>{{ family }}</h1>
+		<h2>{{ family.name }}</h2>
 	{% endif %}
 	<form method="get">
 		{{ filter_form.as_p }}

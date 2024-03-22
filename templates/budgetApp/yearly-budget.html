@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+{% block main_content %}
+<div class="container">
+    <h1 class="my-4">{{object}}</h1>
+    <div class="row">
+        {% for budget in monthly_budgets %}
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">{{budget}}</h5>
+                    <p class="card-text">{{budget.budget}}</p>
+                    <a href="{% url 'monthly-budget' year=budget.yearly_budget.year pk=budget.pk month=budget.month%}" class="btn btn-primary">View Details</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>Still no monthly budgets added</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
