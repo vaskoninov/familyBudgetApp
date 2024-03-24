@@ -1,9 +1,17 @@
 {% extends 'base.html' %}
+{% load my_tags %}
 {% block main_content %}
-    <h2>Register</h2>
-    <form method="post" action="{% url 'register-new-user' %}">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <button type="submit">Register</button>
+  <div class="container">
+    <h2 class="text-center mt-3">Register</h2>
+    <form method="post" action="{% url 'register-new-user' %}" class="form-group">
+      {% csrf_token %}
+      {% for field in form %}
+        <div class="form-group">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field|add_class:"form-control" }}
+        </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-primary float-end mt-3">Register</button>
     </form>
+  </div>
 {% endblock %}

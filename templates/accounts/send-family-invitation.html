@@ -1,8 +1,20 @@
 {% extends 'base.html' %}
+{% load my_tags %}
+
 {% block main_content %}
-	<form action="{% url 'send-family-invitation' %}" method="post">
-		{% csrf_token %}
-		{{ form.as_p }}
-		<input type="submit" value="Send">
-	</form>
+	<div class="container">
+		<h2 class="text-center mt-3">Send Family Invitation</h2>
+		<form method="POST" action="{% url 'send-family-invitation' %}" class="form-group">
+			{% csrf_token %}
+			{% for field in form %}
+				<div class="form-group">
+					<label for="{{ field.id_for_label }}">{{ field.label }}</label>
+					{{ field|add_class:"form-control" }}
+				</div>
+			{% endfor %}
+			<input type="submit" value="Send" class="btn btn-primary float-end mt-3">
+		</form>
+		<a href="{{ referer_url }}" class="btn btn-secondary mt-3">Go back</a>
+
+	</div>
 {% endblock %}

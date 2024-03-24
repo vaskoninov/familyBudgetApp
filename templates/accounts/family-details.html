@@ -1,37 +1,37 @@
 {% extends 'base.html' %}
 {% load account_tags %}
 {% block main_content %}
-	<h1>{{ object }}</h1>
-	<ul>
-		{% for member in family_members %}
-			<li>{{ member }}
-			        {% if user|has_group:"FamilyAdmin" %}<a href="{% url 'remove-family-user' pk=member.pk %}" class="btn btn-danger">Remove from
-			            family</a>{% endif %}</li>
-		{% endfor %}
-	</ul>
-	{% if user|has_group:"FamilyAdmin" %}
-		<div class="alert alert-info" role="alert">
-			You are admin of the {{ object }}
-		</div>
-		<a href="{% url 'send-family-invitation' %}" class="btn btn-primary mb-3">Send invitation</a>
-		{% for invitation in sent_invitations %}
-			<div class="card mb-3">
-				<div class="card-body">
-					<p class="card-text">{{ invitation.family }} invitation for {{ invitation.invitee_username }} with
-						status {{ invitation.status }}</p>
-					<a href="{% url 'delete-invitation' pk=invitation.pk %}" class="btn btn-danger">Delete</a>
-				</div>
-			</div>
-		{% empty %}
-			<div class="alert alert-warning" role="alert">
-				Still no invitations sent!
-			</div>
-		{% endfor %}
-	{% else %}
-		<div class="alert alert-info" role="alert">
-			You are a regular member of the {{ object }}
-		<a href="{% url 'leave-family' pk=object.pk %}" class="btn btn-danger">Leave family</a>
-		</div>
-	{% endif %}
+  <div class="container">
+    <h2 class="text-center mt-3">{{ object }}</h2>
+    <ul class="list-group">
+      {% for member in family_members %}
+        <li class="list-group-item">{{ member }}
+          {% if user|has_group:"FamilyAdmin" %}
+            <a href="{% url 'remove-family-user' pk=member.pk %}" class="btn btn-danger float-end">Remove from family</a>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+    <div class="alert alert-info mt-3" role="alert">
+      You are a regular member of the {{ object }}
+      <a href="{% url 'leave-family' pk=object.pk %}" class="btn btn-danger float-end">Leave family</a>
+    </div>
+    <div class="alert alert-info mt-3" role="alert">
+      You are admin of the {{ object }}
+    </div>
+    <a href="{% url 'send-family-invitation' %}" class="btn btn-primary mb-3">Send invitation</a>
+    {% for invitation in sent_invitations %}
+      <div class="card mb-3">
+        <div class="card-body">
+          <p class="card-text">{{ invitation.family }} invitation for {{ invitation.invitee_username }} with status {{ invitation.status }}</p>
+          <a href="{% url 'delete-invitation' pk=invitation.pk %}" class="btn btn-danger">Delete</a>
+        </div>
+      </div>
+    {% empty %}
+      <div class="alert alert-warning" role="alert">
+        Still no invitations sent!
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}
 ```

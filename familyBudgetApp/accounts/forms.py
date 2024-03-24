@@ -23,7 +23,7 @@ class AppUserCreationForm(auth_forms.UserCreationForm):
 class FamilyInvitationForm(forms.ModelForm):
     class Meta:
         model = FamilyInvitation
-        fields = ['invitee_email']
+        fields = ['invitee_email', 'message']
 
     def clean_invitee_email(self):
         invitee_email = self.cleaned_data.get('invitee_email')

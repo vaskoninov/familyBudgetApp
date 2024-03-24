@@ -1,13 +1,19 @@
 {% extends 'base.html' %}
 {% block main_content %}
-	<p>Sender: {{ object.invited_by }}</p>
-	<p>Invitee: {{ object.invitee_username }}</p>
-	<p>Family: {{ object.family }}</p>
-	<p>Status: {{ object.status }}</p>
-	
-	{% if object.invitee_username == user.username %}
-	<a class="btn btn-primary" href="{% url 'accept-invitation' pk=object.pk %}">Accept</a>
-	<a class="btn btn-danger" href="{% url 'decline-invitation' pk=object.pk %}">Decline</a>
-	{% endif %}
-	<a href="{{ referer_url }}">Go back</a>
+  <div class="container">
+    <h2 class="text-center mt-3">Invitation Details</h2>
+    <ul class="list-group">
+      <li class="list-group-item">Sender: {{ object.invited_by }}</li>
+      <li class="list-group-item">Invitee: {{ object.invitee_username }}</li>
+      <li class="list-group-item">Family: {{ object.family }}</li>
+      <li class="list-group-item">Status: {{ object.status }}</li>
+    </ul>
+    {% if object.invitee_username == user.username %}
+      <div class="mt-3">
+        <a class="btn btn-primary" href="{% url 'accept-invitation' pk=object.pk %}">Accept</a>
+        <a class="btn btn-danger" href="{% url 'decline-invitation' pk=object.pk %}">Decline</a>
+      </div>
+    {% endif %}
+    <a href="{{ referer_url }}" class="btn btn-secondary mt-3">Go back</a>
+  </div>
 {% endblock %}

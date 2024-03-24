@@ -1,13 +1,21 @@
 {% extends 'base.html' %}
 {% block main_content %}
-	{% if not user.profile.family %}
-		<form action="{% url 'create-family' %}" method="post">
-			{% csrf_token %}
-			{{ form.as_p }}
-			<button>Create</button>
-		</form>
-	{% else %}
-		<p>You are already part of the {{ user.profile.family }}</p>
-	{% endif %}
-	<a href="{{ referer_url }}" class="btn btn-secondary">Back</a>
+ {% if not user.profile.family %}
+  <div class="container">
+    <h2 class="text-center mt-3">Create Family</h2>
+    <form action="{% url 'create-family' %}" method="post" class="form-group">
+     {% csrf_token %}
+     {% for field in form %}
+        <div class="form-group">
+          <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+          {{ field|add_class:"form-control" }}
+        </div>
+     {% endfor %}
+     <button type="submit" class="btn btn-primary float-end mt-3">Create</button>
+    </form>
+  </div>
+ {% else %}
+ {% endif %}
+  <p>You are already part of the {{ user.profile.family }}</p>
+ <a href="{{ referer_url }}" class="btn btn-secondary mt-3">Back</a>
 {% endblock %}
