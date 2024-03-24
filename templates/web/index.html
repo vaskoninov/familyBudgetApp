@@ -5,7 +5,7 @@
 	{% if not profile %}
 	<div class="container">
 		<div class="alert alert-warning" role="alert">
-			<p class="text-center mb-3">Please fill in your profile details!</p>
+			<p class="text-center mb-3">Please fill in your profile details for better experience!</p>
 			<p class="text-center"><a class="btn btn-primary" href="{% url 'user-profile-update' pk=user.pk%}">Update Your Profile</a></p>
 		</div>
 	</div>
@@ -27,7 +27,7 @@
 
 	<p>Logged user: {{ user }}</p>
 	{% if monthly_budget %}
-		<p class="text-center display-4 mb-3"> {{ user.profile.first_name }} balance
+		<p class="text-center display-4 mb-3"> {{ user.profile.first_name }}'s balance
 			for {{ monthly_budget.month|month_name }}/{{ monthly_budget.yearly_budget.year }}: {{ budget_balance }}</p>
 
 

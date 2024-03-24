@@ -30,10 +30,10 @@
 					</div>
 					<div class="card-footer">
 						<a href="{% url 'user-profile-update' pk=user.pk %}" class="btn btn-primary">Update</a>
-						{% if not user.userprofile.family %}
+						{% if not user.profile.family %}
 							<a href="{% url 'create-family' %}" class="btn btn-success">Create Family</a>
-{#						{% elif user != family.admin %}#}
-{#							<a href="{% url 'leave-family' %}" class="btn btn-danger">Leave Family</a>#}
+						{% elif user != family.admin %}
+							<a href="{% url 'leave-family' pk=user.profile.family.pk %}" class="btn btn-danger">Leave Family</a>
 						{% endif %}
 						<a href="{% url 'change-user-password' pk=user.pk %}" class="btn btn-warning">Change Password</a>
 						<a href="{% url 'delete-user' pk=user.pk %}" class="btn btn-danger">Delete</a>

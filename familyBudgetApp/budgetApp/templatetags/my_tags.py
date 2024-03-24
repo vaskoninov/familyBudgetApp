@@ -32,3 +32,8 @@ def last_five(context, item_type, url_name):
                                                        item_type=item_type).order_by("-date")[:5]
 
     return {"last_five": last_five_budget_items, "url_name": url_name}
+
+
+@register.filter(name='add_class')
+def add_class(value, arg):
+    return value.as_widget(attrs={'class': arg})

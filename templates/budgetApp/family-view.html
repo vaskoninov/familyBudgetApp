@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+
+{% block main_content %}
+    <div class="container mt-5">
+        <h2 class="mb-4">{{ family.name }}</h2>
+        {% for year, months in total_monthly_balances.items %}
+            <h3 class="mt-3">{{ year }}</h3>
+            {% for month, balance in months.items %}
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <p class="card-text">
+                            {{ month|month_name }} - balance: {{ balance }}
+                            {% if user == family.admin %}
+                                <a href="{% url 'family-monthly-budget' year=year month=month %}" class="btn btn-primary float-end">View Details</a>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+{% endblock %}

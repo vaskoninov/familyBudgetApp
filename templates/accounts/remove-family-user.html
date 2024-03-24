@@ -3,8 +3,10 @@
 {% block main_content %}
   <h2>Admin Remove User from Family</h2>
   <form method="post" action="{% url 'remove-family-user' pk=object.pk %}">
+    {{ form.as_p }}
     {% csrf_token %}
     <p>Are you sure you want to remove this user from your family?</p>
     <button type="submit">Confirm</button>
   </form>
+	<a href="{{ referer_url }}">Go back</a>
 {% endblock %}

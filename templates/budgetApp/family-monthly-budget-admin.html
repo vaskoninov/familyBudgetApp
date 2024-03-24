@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load my_tags %}
+{% block main_content %}
+	<div class="container text-center">
+		<h1 class="display-4 text-uppercase text-bg-primary">{{ object }}</h1>
+	
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<h2>Incomes for the {{ month|month_name }}/{{ year }}</h2>
+				{% for income in incomes %}
+					{% include 'partials/item-card.html' with item=income url_name='view-budget-item-details' %}
+				{% empty %}
+					<p>Still no incomes added</p>
+				{% endfor %}
+			</div>
+			<div class="col">
+				<h2>Expenses for the {{ month|month_name }}/{{ year }}</h2>
+				{% for expense in expenses %}
+					{% include 'partials/item-card.html' with item=expense url_name='view-budget-item-details' %}
+				{% empty %}
+					<p>Still no expenses added</p>
+				{% endfor %}
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

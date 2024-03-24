@@ -1,4 +1,5 @@
 from django.contrib.auth import mixins as auth_mixins
+from django.db.models import Sum
 from django.urls import reverse_lazy
 from django.views import generic as views
 
@@ -69,7 +70,7 @@ class BudgetItemListView(AbstractBudgetItemListView):
         return queryset.filter(user=self.request.user)
 
 
-class FamilyBudgetItemListView(AbstractBudgetItemListView):
+class FamilyBudgetItemListAdminView(AbstractBudgetItemListView):
     template_name = "budgetApp/list-budget-items.html"
 
     def get_queryset(self):
@@ -117,3 +118,58 @@ class ViewMonthlyBudgetDetails(auth_mixins.LoginRequiredMixin, views.DetailView)
         context["incomes"] = incomes
         context["expenses"] = expenses
         return context
+
+
+class FamilyViewForNonAdmin(auth_mixins.LoginRequiredMixin, views.TemplateView):
+    template_name = "budgetApp/family-view.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        family = self.request.user.profile.family
+        family_members = get_users_from_family(family)
+        context["family_members"] = family_members
+        context['family'] = family
+
+        yearly_budgets = YearlyBudget.objects.filter(user__in=family_members)
+
+        context['years'] = yearly_budgets.values_list('year', flat=True).distinct()
+
+        total_monthly_balances = {}
+        for year in context['years']:
+            total_monthly_balances[year] = {}
+            for month in range(1, 13):
+                monthly_budgets = MonthlyBudget.objects.filter(
+                    yearly_budget__year=year,
+                    month=month,
+                    user__in=family_members
+                )
+                if monthly_budgets.exists():
+                    total_monthly_balances[year][month] = monthly_budgets.aggregate(Sum('balance'))['balance__sum']
+
+        context["total_monthly_balances"] = total_monthly_balances
+
+        return context
+
+
+class FamilyMonthlyBudgetAdminView(auth_mixins.LoginRequiredMixin, views.TemplateView):
+    template_name = "budgetApp/family-monthly-budget-admin.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        family = self.request.user.profile.family
+        family_members = get_users_from_family(family)
+        context["family_members"] = family_members
+        context['family'] = family
+
+        year = self.kwargs.get('year')
+        month = self.kwargs.get('month')
+
+        incomes = BudgetItem.objects.filter(user__in=family_members, item_type='INCOME', date__year=year, date__month=month)
+        expenses = BudgetItem.objects.filter(user__in=family_members, item_type='EXPENSE', date__year=year, date__month=month)
+
+        context["incomes"] = incomes
+        context["expenses"] = expenses
+
+        return context
+
+

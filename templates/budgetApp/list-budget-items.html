@@ -2,59 +2,62 @@
 {% load my_tags %}
 
 {% block main_content %}
-	{% if family %}
-		<h2>{{ family.name }}</h2>
-	{% endif %}
-	<form method="get">
-		{{ filter_form.as_p }}
-		<button type="submit">Filter</button>
-	</form>
-	<form method="GET">
-		{% tags_available %}
-		{% csrf_token %}
-		<button type="submit">Filter Tags</button>
-	</form>
-	<form method="GET" action="{% url 'list-budget-items' %}">
-		<div class="input-group mb-3">
-			<input type="text" name="name" class="form-control" placeholder="Search by name">
-			<div class="input-group-append">
-				<button class="btn btn-outline-secondary" type="submit">Search</button>
+	<div class="container">
+		{% if family %}
+			<h2 class="mb-4">{{ family.name }}</h2>
+		{% endif %}
+		<div class="row">
+			<div class="col">
+				<form method="get" class="mb-3">
+					{{ filter_form.as_table }}
+					<button type="submit" class="btn btn-primary">Filter</button>
+				</form>
+			</div>
+			<div class="col">
+				<form method="GET" class="mb-3">
+					{% tags_available %}
+					{% csrf_token %}
+					<button type="submit" class="btn btn-primary">Filter Tags</button>
+				</form>
+			</div>
+			<div class="col">
+				<form method="GET" action="{% url 'list-budget-items' %}" class="mb-3">
+					<div class="input-group">
+						<input type="text" name="name" class="form-control" placeholder="Search by name">
+						<div class="input-group-append">
+							<button class="btn btn-outline-secondary" type="submit">Search</button>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
-	</form>
-	{#	{{ fig|safe }}#}
-
-	<div class="container-fluid">
-		<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-			{% for item in budget_items %}
-				{% include 'partials/item-card.html' with item=item url_name='view-budget-item-details' %}
-			{% empty %}
-				<p>No budget entries</p>
-			{% endfor %}
+		<div class="container-fluid">
+			<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
+				{% for item in budget_items %}
+					{% include 'partials/item-card.html' with item=item url_name='view-budget-item-details' %}
+				{% empty %}
+					<p class="mt-3">No budget entries</p>
+				{% endfor %}
+			</div>
 		</div>
+		{% if page_obj.paginator.count > 5 %}
+			<div class="pagination d-flex justify-content-center mt-3">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+	                <a href="?page={{ page_obj.previous_page_number }}" class="btn btn-primary">&larr;</a>
+                {% else %}
+	                <span class="disabled btn btn-secondary">&larr;</span>
+                {% endif %}
+	            <span class="current mx-2">
+                    {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                </span>
+	            {% if page_obj.has_next %}
+		            <a href="?page={{ page_obj.next_page_number }}" class="btn btn-primary">&rarr;</a>
+	            {% else %}
+		            <span class="disabled btn btn-secondary">&rarr;</span>
+	            {% endif %}
+            </span>
+			</div>
+		{% endif %}
 	</div>
-
-	{% if page_obj.paginator.count > 5 %}
-		<div class="pagination d-flex justify-content-center">
-    <span class="step-links">
-        {% if page_obj.has_previous %}
-	        <a href="?page={{ page_obj.previous_page_number }}">&larr;</a>
-        {% else %}
-	        <span class="disabled">&larr;</span>
-        {% endif %}
-
-	    <span class="current">
-            {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
-        </span>
-
-	    {% if page_obj.has_next %}
-		    <a href="?page={{ page_obj.next_page_number }}">&rarr;</a>
-	    {% else %}
-		    <span class="disabled">&rarr;</span>
-	    {% endif %}
-    </span>
-		</div>
-	{% endif %}
-
-
 {% endblock %}

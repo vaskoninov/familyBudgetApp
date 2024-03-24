@@ -17,20 +17,41 @@
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
 							   data-bs-toggle="dropdown" aria-expanded="false">
-								Actions
+								Create
 							</a>
 							<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-								<a class="btn button-primary" href="{% url 'create-budget-item' %}">Create budget
-									item</a>
+								<a class="btn button-primary" href="{% url 'create-budget-item' %}">A Budget Item</a>
 							</ul>
 						</li>
-						<a class="nav-link" href="{% url 'list-budget-items' %}">Personal Entries</a>
-						{% if user.profile.family %}
-							<a class="nav-link" href="{% url 'family-list-budget-items' %}">Family Entries</a>
-						{% endif %}
-						<a class="nav-link" href="{% url 'user-details' pk=user.id %}">Profile</a>
-						<a class="nav-link" href="{% url 'logout-user-confirmation' %}">Logout</a>
+						<li class="navbar-item">
+							<a class="nav-link" href="{% url 'list-budget-items' %}">Personal Entries</a>
 						</li>
+						{% if user.profile.family %}
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+								   data-bs-toggle="dropdown" aria-expanded="false">
+									Family
+								</a>
+								<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+									<li class="navbar-item">
+										<a class="nav-link" href="{% url 'family-year-month' %}">Family Statistics</a>
+									</li>
+									{% if user.profile.family.admin == user %}
+										<li class="navbar-item">
+											<a class="nav-link" href="{% url 'family-list-budget-items' %}">Family
+												Entries</a>
+										</li>
+									{% endif %}
+								</ul>
+							</li>
+						{% endif %}
+						<li class="navbar-item">
+							<a class="nav-link" href="{% url 'user-details' pk=user.id %}">Profile</a>
+						</li>
+						<li class="navbar-item">
+							<a class="nav-link" href="{% url 'logout-user-confirmation' %}">Logout</a>
+						</li>
+						
 					{% else %}
 						<li class="navbar-item">
 							<a class="nav-link" href="{% url 'register-new-user' %}">Register</a>

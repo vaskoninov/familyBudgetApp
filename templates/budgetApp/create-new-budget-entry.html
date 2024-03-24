@@ -1,10 +1,20 @@
 {% extends 'base.html' %}
+{% load my_tags %}
+
 {% block main_content %}
 
-<form method="post" action="{% url 'create-budget-item' %}">
-	{{ form.as_p }}
-	{% csrf_token %}
-	<button type="submit">Submit</button>
-</form>
+	<div class="container">
+		<h1 class="text-center mt-3">Create A New Budget Item</h1>
+		<form method="post" action="{% url 'create-budget-item' %}" class="form-group">
+			{% csrf_token %}
+			{% for field in form %}
+				<div class="form-group">
+					<label for="{{ field.id_for_label }}">{{ field.label }}</label>
+					{{ field|add_class:"form-control" }}
+				</div>
+			{% endfor %}
+			<button type="submit" class="btn btn-primary float-end mt-3">Submit</button>
+		</form>
+	</div>
 
 {% endblock %}
