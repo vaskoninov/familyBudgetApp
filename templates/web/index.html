@@ -35,12 +35,14 @@
 		<p class="text-center display-4 mb-3"> {{ user.profile.first_name }}'s balance
 			for {{ monthly_budget.month|month_name }}/{{ monthly_budget.yearly_budget.year }}: {{ budget_balance }}</p>
 
-
-
 		<div class="container">
 			<div class="row">
-				{% include 'partials/last-five-per-month.html' with title='incomes' item_type='INCOME' url_name='view-budget-item-details' %}
-				{% include 'partials/last-five-per-month.html' with title='expenses' item_type='EXPENSE' url_name='view-budget-item-details' %}
+				<div class="col-md-12 col-lg-6 mb-3">
+					{% include 'partials/last-five-per-month.html' with title='incomes' item_type='INCOME' url_name='view-budget-item-details' %}
+				</div>
+				<div class="col-md-12 col-lg-6 mb-3">
+					{% include 'partials/last-five-per-month.html' with title='expenses' item_type='EXPENSE' url_name='view-budget-item-details' %}
+				</div>
 			</div>
 		</div>
 	{% else %}

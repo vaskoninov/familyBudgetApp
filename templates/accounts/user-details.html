@@ -1,45 +1,50 @@
 {% extends 'base.html' %}
 {% block main_content %}
- <div class="container mt-5">
-  <div class="row justify-content-center">
-   <div class="col-md-6">
-    <div class="card">
-     <div class="card-header bg-primary text-white">
-      <h5 class="card-title">{{ user.email }}</h5>
-     </div>
-     <div class="card-body">
-      <p class="card-text"><strong>First Name:</strong> {{ user.profile.first_name }}</p>
-      <p class="card-text"><strong>Last Name:</strong> {{ user.profile.last_name }}</p>
-      {% if user.profile.family %}
-       <p class="card-text"><strong>Family:</strong> <a
-         href="{% url 'family-details' pk=user.profile.family.id %}" class="text-decoration-none">{{ user.profile.family }}</a>
-       </p>
-      {% else %}
-       <p class="card-text">Still not part of a family!</p>
-       <h6>Invitations:</h6>
-       {% for invitation in invitations %}
-        <ul class="list-group">
-         <li class="list-group-item"><a
-           href="{% url 'invitation-details' pk=invitation.pk %}" class="text-decoration-none">Invitation</a></li>
-        </ul>
-       {% empty %}
-        <p class="card-text">No invitations yet!</p>
-       {% endfor %}
-      {% endif %}
-     </div>
-     <div class="card-footer">
-      <a href="{% url 'user-profile-update' pk=user.pk %}" class="btn btn-primary">Update</a>
-      {% if not user.profile.family %}
-       <a href="{% url 'create-family' %}" class="btn btn-success">Create Family</a>
-      {% elif user != family.admin %}
-       <a href="{% url 'leave-family' pk=user.profile.family.pk %}" class="btn btn-danger">Leave Family</a>
-      {% endif %}
-      <a href="{% url 'change-user-password' pk=user.pk %}" class="btn btn-warning">Change Password</a>
-      <a href="{% url 'delete-user' pk=user.pk %}" class="btn btn-danger">Delete</a>
-      <a href="{{ referer_url }}" class="btn btn-secondary">Back</a>
-     </div>
-    </div>
-   </div>
-  </div>
- </div>
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header bg-primary text-white">
+						<h5 class="card-title">{{ user.email }}</h5>
+					</div>
+					<div class="card-body">
+						<p class="card-text"><strong>First Name:</strong> {{ user.profile.first_name }}</p>
+						<p class="card-text"><strong>Last Name:</strong> {{ user.profile.last_name }}</p>
+						{% if user.profile.family %}
+							<p class="card-text"><strong>Family:</strong> <a
+									href="{% url 'family-details' pk=user.profile.family.id %}"
+									class="text-decoration-none">{{ user.profile.family }}</a>
+							</p>
+						{% else %}
+							<p class="card-text">Still not part of a family!</p>
+							<h6>Invitations:</h6>
+							{% for invitation in invitations %}
+								<ul class="list-group">
+									<li class="list-group-item"><a
+											href="{% url 'invitation-details' pk=invitation.pk %}"
+											class="text-decoration-none">Invitation</a></li>
+								</ul>
+							{% empty %}
+								<p class="card-text">No invitations yet!</p>
+							{% endfor %}
+						{% endif %}
+					</div>
+					<div class="card-footer d-flex flex-column flex-xl-row justify-content-around">
+						<a href="{% url 'user-profile-update' pk=user.pk %}"
+						   class="btn btn-primary mb-2 ">Update</a>
+						{% if not user.profile.family %}
+							<a href="{% url 'create-family' %}" class="btn btn-success mb-2 ">Create Family</a>
+						{% elif user != family.admin %}
+							<a href="{% url 'leave-family' pk=user.profile.family.pk %}"
+							   class="btn btn-danger mb-2 ">Leave Family</a>
+						{% endif %}
+						<a href="{% url 'change-user-password' pk=user.pk %}" class="btn btn-warning mb-2 ">Change
+							Password</a>
+						<a href="{% url 'delete-user' pk=user.pk %}" class="btn btn-danger mb-2 ">Delete</a>
+						<a href="{{ referer_url }}" class="btn btn-secondary mb-2 ">Back</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 {% endblock %}
