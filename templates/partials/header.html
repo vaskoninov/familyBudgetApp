@@ -6,7 +6,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav d-flex">
+				<ul class="navbar-nav d-flex w-100">
 					<li class="navbar-item">
 						<a class="nav-link" href="{% url 'index' %}">Home</a>
 					</li>
@@ -51,7 +51,7 @@
 						<li class="navbar-item">
 							<a class="nav-link" href="{% url 'logout-user-confirmation' %}">Logout</a>
 						</li>
-						
+
 					{% else %}
 						<li class="navbar-item">
 							<a class="nav-link" href="{% url 'register-new-user' %}">Register</a>
@@ -60,6 +60,10 @@
 							<a class="nav-link" href="{% url 'login-user' %}">Login</a>
 						</li>
 					{% endif %}
+					<li class="navbar-item ms-auto">
+						<a class="nav-link" href="#">Logged as:
+							{% if user.name %}{{ user.name }}{% else %}{{ user }}{% endif %}</a>
+					</li>
 				</ul>
 			</div>
 		</div>
