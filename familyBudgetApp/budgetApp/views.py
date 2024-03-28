@@ -44,7 +44,7 @@ class DeleteBudgetItemView(auth_mixins.LoginRequiredMixin, UserIsCreatorMixin, R
     success_url = reverse_lazy("index")
 
 
-class AbstractBudgetItemListView(auth_mixins.LoginRequiredMixin, TagFilterMixin, CategoryFilterMixin, SearchMixin,
+class AbstractBudgetItemListView(auth_mixins.LoginRequiredMixin, SearchMixin, TagFilterMixin, CategoryFilterMixin, 
                                  views.ListView):
     model = BudgetItem
 
