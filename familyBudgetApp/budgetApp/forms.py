@@ -52,5 +52,13 @@ class FilterBudgetItemTypeForm(forms.Form):
     category = forms.ChoiceField(choices=CHOICES, required=False)
 
 
+class FilterBudgetItemTagForm(forms.Form):
+    tag = forms.ModelChoiceField(queryset=Tag.objects.all(), required=False)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['tag'].choices = [('', 'All')] + [(tag.id, tag.name) for tag in Tag.objects.all()]
+
+
 class FilterBudgetItemNameForm(forms.Form):
     title = forms.CharField(max_length=100, required=False)

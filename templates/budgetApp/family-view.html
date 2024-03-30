@@ -1,6 +1,10 @@
 {% extends 'base.html' %}
 {% load my_tags %}
 
+{% block page_title %} {{ family.name }} - Statistics {% endblock %}
+
+
+
 {% block main_content %}
     <div class="container mt-5">
         <h2 class="mb-4">{{ family.name }}</h2>

@@ -16,12 +16,6 @@ def month_name(month_number):
     return calendar.month_name[month_number]
 
 
-@register.inclusion_tag("templatetags/tags.html")
-def tags_available():
-    tags = Tag.objects.all()
-    return {"tags": tags}
-
-
 @register.inclusion_tag("templatetags/last-five.html", takes_context=True)
 def last_five(context, item_type, url_name):
     month = context['month']

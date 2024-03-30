@@ -1,5 +1,13 @@
 {% extends 'base.html' %}
 {% load my_tags %}
+{% block page_title %}
+	{% if family %}
+		{{ family.name }} Budget Items
+	{% else %}
+		Budget Items
+	{% endif %}
+{% endblock %}
+
 
 {% block main_content %}
 	<div class="container">
@@ -8,26 +16,32 @@
 		{% endif %}
 		<div class="row mt-3">
 			<div class="col d-flex col-md-12 col-lg-4 mb-3">
-				<form method="get" class="mb-3">
+				<form class="filter-form mb-3" method="GET" action="
+						{% if family %}{% url "family-list-budget-items" %}{% else %}{% url 'list-budget-items' %}{% endif %}">
 					{{ filter_form.as_table }}
-					<button type="submit" class="btn btn-primary">Filter</button>
+					<input type="hidden" name="tag" value="{{ request.GET.tag }}">
+					<input type="hidden" name="name" value="{{ request.GET.name }}">
+					<button type="submit" class="btn btn-primary">Category</button>
 				</form>
 			</div>
 			<div class="col d-flex col-md-12 col-lg-4 mb-3">
-				<form method="GET" class="mb-3">
-					{% tags_available %}
+				<form class="filter-form mb-3" method="GET" action="
+						{% if family %}{% url "family-list-budget-items" %}{% else %}{% url 'list-budget-items' %}{% endif %}">
+					{{ filter_tags.as_table }}
+					<input type="hidden" name="category" value="{{ request.GET.category }}">
+					<input type="hidden" name="name" value="{{ request.GET.name }}">
 					{% csrf_token %}
-					<button type="submit" class="btn btn-primary">Filter Tags</button>
+					<button type="submit" class="btn btn-primary">Tags</button>
 				</form>
 			</div>
 			<div class="col d-flex col-md-12 col-lg-4 mb-3">
-				<form method="GET" action="{% url 'list-budget-items' %}" class="mb-3">
-					<div class="input-group">
-						<input type="text" name="name" class="form-control" placeholder="Search by name">
-						<div class="input-group-append">
-							<button class="btn btn-outline-secondary" type="submit">Search</button>
-						</div>
-					</div>
+				<form class="filter-form mb-3" method="GET" action="
+						{% if family %}{% url "family-list-budget-items" %}{% else %}{% url 'list-budget-items' %}{% endif %}">
+					<input type="text" name="name" placeholder="Enter search term">
+					<button type="submit" class="btn btn-primary">Search</button>
+					<input type="hidden" name="category" value="{{ request.GET.category }}">
+					<input type="hidden" name="tag" value="{{ request.GET.tag }}">
+					{% csrf_token %}
 				</form>
 			</div>
 		</div>

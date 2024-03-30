@@ -3,7 +3,8 @@ from django.db.models import Sum
 from django.urls import reverse_lazy
 from django.views import generic as views
 
-from familyBudgetApp.budgetApp.forms import BudgetItemForm, UpdateBudgetItemForm, FilterBudgetItemNameForm
+from familyBudgetApp.budgetApp.forms import BudgetItemForm, UpdateBudgetItemForm, FilterBudgetItemNameForm, \
+    FilterBudgetItemTagForm
 from familyBudgetApp.budgetApp.forms import FilterBudgetItemTypeForm
 from familyBudgetApp.budgetApp.models import BudgetItem, YearlyBudget, MonthlyBudget
 from familyBudgetApp.common.helpers import get_users_from_family
@@ -55,10 +56,21 @@ class AbstractBudgetItemListView(auth_mixins.LoginRequiredMixin, SearchMixin, Ta
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Pass query parameters to forms
-        context['filter_form'] = FilterBudgetItemTypeForm(initial={"category": self.request.GET.get('item_type')})
-        context['tags'] = self.get_search_tag_id()
+        context['filter_form'] = FilterBudgetItemTypeForm(initial={"category": self.request.GET.get('category')})
+        context['filter_tags'] = FilterBudgetItemTagForm(initial={"tag": self.request.GET.get('tag')})
         context['search_term'] = FilterBudgetItemNameForm(initial={"title": self.request.GET.get('name')})
         return context
+
+    def get_queryset(self):
+        # Start with the base queryset from ListView
+        queryset = super().get_queryset()
+
+        # Sequentially apply filters
+        queryset = self.apply_category_filter(queryset)  # From CategoryFilterMixin
+        queryset = self.apply_tag_filter(queryset)  # From TagFilterMixin
+        queryset = self.apply_search_filter(queryset)  # Assume this is defined in your view or another mixin
+
+        return queryset
 
 
 class BudgetItemListView(AbstractBudgetItemListView):
