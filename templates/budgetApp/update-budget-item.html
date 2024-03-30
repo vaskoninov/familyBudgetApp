@@ -1,12 +1,22 @@
 {% extends 'base.html' %}
+{% load my_tags %}
+{% block page_title %}
+    Update Budget Item
+{% endblock %}
 
 {% block main_content %}
-    <h2>Update this {{ object.name|lower }}</h2>
-    <form method="POST">
-        {% csrf_token %}
-        {{form}}
-        <button type="submit" class="btn btn-success">Update</button>
-        <a href="{{ referer_url }}" class="btn btn-secondary">Back</a>
-    </form>
-	
+    <div class="container">
+        <h1 class="text-center mt-3">Update Budget Item</h1>
+        <form method="post" action="{% url 'update-budget-item' object.id %}" class="form-group">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                    {{ field|add_class:"form-control" }}
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary float-end mt-3">Submit</button>
+        </form>
+        <a href="{{ referer_url }}" class="btn btn-secondary mt-3">Back</a>
+    </div>
 {% endblock %}

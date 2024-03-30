@@ -1,14 +1,13 @@
 {% extends 'base.html' %}
 {% load my_tags %}
 {% block page_title %}
-	Create A New Budget Item
+	Create A New Tag
 {% endblock %}
 
 {% block main_content %}
-
 	<div class="container">
-		<h1 class="text-center mt-3">Create A New Budget Item</h1>
-		<form method="post" action="{% url 'create-budget-item' %}" class="form-group">
+		<h1 class="text-center mt-3">Create A New Tag</h1>
+		<form method="post" action="{% url 'create-new-tag' %}" class="form-group">
 			{% csrf_token %}
 			{% for field in form %}
 				<div class="form-group">
@@ -21,5 +20,6 @@
 		<a href="{{ referer_url }}" class="btn btn-secondary mt-3">Back</a>
 
 	</div>
+
 
 {% endblock %}
