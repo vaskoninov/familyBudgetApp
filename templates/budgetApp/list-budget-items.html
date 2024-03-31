@@ -38,6 +38,7 @@
 				<form class="filter-form mb-3" method="GET" action="
 						{% if family %}{% url "family-list-budget-items" %}{% else %}{% url 'list-budget-items' %}{% endif %}">
 					<input type="text" name="name" placeholder="Enter search term">
+					<span class="tooltiptext">You can search in the name or description of the budget entry</span>
 					<button type="submit" class="btn btn-primary">Search</button>
 					<input type="hidden" name="category" value="{{ request.GET.category }}">
 					<input type="hidden" name="tag" value="{{ request.GET.tag }}">

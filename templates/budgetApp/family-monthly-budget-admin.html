@@ -8,7 +8,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col">
-				<h2>Incomes for the {{ month|month_name }}/{{ year }}</h2>
+				<h2>Incomes for {{ month|month_name }}/{{ year }}</h2>
 				{% for income in incomes %}
 					{% include 'partials/item-card.html' with item=income url_name='view-budget-item-details' %}
 				{% empty %}
@@ -16,7 +16,7 @@
 				{% endfor %}
 			</div>
 			<div class="col">
-				<h2>Expenses for the {{ month|month_name }}/{{ year }}</h2>
+				<h2>Expenses for {{ month|month_name }}/{{ year }}</h2>
 				{% for expense in expenses %}
 					{% include 'partials/item-card.html' with item=expense url_name='view-budget-item-details' %}
 				{% empty %}

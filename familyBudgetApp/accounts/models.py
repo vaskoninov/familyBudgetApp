@@ -67,7 +67,7 @@ class Family(models.Model):
         verbose_name_plural = "Families"
 
     def __str__(self):
-        return f'{self.name} family with {self.family_members.count()} members and {self.admin} admin.'
+        return self.name
 
 
 class Profile(models.Model):

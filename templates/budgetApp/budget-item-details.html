@@ -1,29 +1,33 @@
 {% extends 'base.html' %}
+
+{% block page_title %} Budget Item Details {% endblock %}
+
 {% block main_content %}
-<div class="d-flex justify-content-center vh-100 mt-5">
-	<div class="col-sm-12 col-md-8 col-lg-6">
-		<div class="card mb-4">
-			<div class="card-header">
-				<h5 class="card-title">{{ object.name }}</h5>
-			</div>
-			<div class="card-body">
-				<p class="card-text">{{ object.description }}</p>
-				<p class="card-text">{{ object.amount }}</p>
-				<p class="card-text">{{ object.date }}</p>
-				<p class="card-text">{{ object.user }}</p>
-				{% if object.item_tags %}
-				<p class="card-text">{{ object.item_tags }}</p>
-				{% else %}
-				<p class="card-text">No tags</p>
-				{% endif %}
-			</div>
-			<div class="card-footer">
-				<a href="{% url 'update-budget-item' object.pk %}" class="btn btn-primary">Update</a>
-				<a href="{% url 'delete-budget-item' object.pk %}" class="btn btn-danger">Delete</a>
-				<a href="{{ referer_url }}" class="btn btn-secondary">Back</a>
+	<div class="container mt-5">
+		<div class="row justify-content-center">
+			<div class="col-md-6">
+				<div class="card">
+					<div class="card-header bg-primary text-white">
+						<h5 class="card-title">{{ object.name }}</h5>
+					</div>
+					<div class="card-body">
+						<p class="card-text"><strong>Description:</strong> {{ object.description }}</p>
+						<p class="card-text"><strong>Amount:</strong> {{ object.amount }}</p>
+						<p class="card-text"><strong>Date:</strong> {{ object.date }}</p>
+						<p class="card-text"><strong>User:</strong> {{ object.user }}</p>
+						{% if object.item_tags %}
+							<p class="card-text"><strong>Tags:</strong> {{ object.item_tags }}</p>
+						{% else %}
+							<p class="card-text">No tags</p>
+						{% endif %}
+					</div>
+					<div class="card-footer d-flex flex-column flex-xl-row justify-content-around">
+						<a href="{% url 'update-budget-item' object.pk %}" class="btn btn-primary mb-2 ">Update</a>
+						<a href="{% url 'delete-budget-item' object.pk %}" class="btn btn-danger mb-2 ">Delete</a>
+						<a href="{{ referer_url }}" class="btn btn-secondary mb-2 ">Back</a>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
-
 {% endblock %}

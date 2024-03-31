@@ -35,10 +35,15 @@
 
 
 	{% if monthly_budget %}
-		<p class="text-center display-4 mb-3"> {{ user.profile.first_name }}'s balance
-			for {{ monthly_budget.month|month_name }}/{{ monthly_budget.yearly_budget.year }}: {{ budget_balance }}</p>
-
-		<div class="container">
+		<h2 class="text-center index-heading mb-3">
+			<div>
+				{% if profile %}{{ user.profile.first_name }}{% else %}{{ user.email }}{% endif %}'s balance
+			</div>
+			<div>
+				for {{ monthly_budget.month|month_name }}/{{ monthly_budget.yearly_budget.year }}: {{ budget_balance }}
+			</div>
+		</h2>
+		<div class="container index-five">
 			<div class="row">
 				<div class="col-md-12 col-lg-6 mb-3">
 					{% include 'partials/last-five-per-month.html' with title='incomes' item_type='INCOME' url_name='view-budget-item-details' %}

@@ -37,9 +37,6 @@
 						   class="btn btn-primary mb-2 ">Update</a>
 						{% if not user.profile.family %}
 							<a href="{% url 'create-family' %}" class="btn btn-success mb-2 ">Create Family</a>
-						{% elif user != family.admin %}
-							<a href="{% url 'leave-family' pk=user.profile.family.pk %}"
-							   class="btn btn-danger mb-2 ">Leave Family</a>
 						{% endif %}
 						<a href="{% url 'change-user-password' pk=user.pk %}" class="btn btn-warning mb-2 ">Change
 							Password</a>
@@ -50,4 +47,5 @@
 			</div>
 		</div>
 	</div>
+
 {% endblock %}

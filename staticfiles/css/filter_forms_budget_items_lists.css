@@ -1,0 +1,54 @@
+.filter-form {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.filter-form select {
+    flex-grow: 1;
+    margin: 0 10px;
+}
+
+.filter-form button {
+    margin: 0 10px;
+    width: 10em;
+}
+
+.filter-form input[type="text"] {
+    max-width: calc(100% - 9.5em);
+    flex-grow: 1;
+}
+
+.filter-form input[type="text"] + .tooltiptext {
+    visibility: hidden;
+    min-width: 120px;
+    white-space: nowrap;
+    font-size: smaller;
+    background-color: #F6F6F6;
+    color: slategrey;
+    text-align: center;
+    border-radius: 6px;
+    padding: 3px 3px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    left: 50%;
+    margin-left: -160px;
+
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.filter-form input[type="text"]:hover + .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.filter-form input[type="text"]:focus + .tooltiptext {
+    visibility: hidden;
+    opacity: 0;
+}

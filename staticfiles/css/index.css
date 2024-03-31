@@ -1,0 +1,25 @@
+.index-heading {
+    font-size: 3em;
+    line-height: 1.2;
+    margin-bottom: 0.5em;
+}
+
+.index-five h2 {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+}
+
+@media (max-width: 1200px) {
+    .index-heading {
+        font-size: 2em;
+    }
+}
+
+@media (max-width: 720px) {
+    .index-heading {
+        font-size: 1.5em;
+    }
+    .index-five h2 {
+        font-size: 1em;
+    }
+}

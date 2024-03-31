@@ -120,7 +120,7 @@ class CreateFamily(LoginRequiredMixin, RefererURLMixin, views.CreateView):
         return super().form_valid(form)
 
 
-class FamilyDetailsView(LoginRequiredMixin, views.DetailView):
+class FamilyDetailsView(LoginRequiredMixin, RefererURLMixin, views.DetailView):
     model = Family
     template_name = 'accounts/family-details.html'
 
