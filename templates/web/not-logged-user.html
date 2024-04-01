@@ -1,28 +1,28 @@
 {% extends 'base.html' %}
 {% load my_tags %}
 {% block main_content %}
- <div class="container text-center">
-  <h1 class="display-4 mt-5">Welcome to the Family Budget App</h1>
-  <p class="lead">You are not logged in</p>
+	<div class="container text-center">
+	<h1 class="display-4 mt-5">Welcome to the Family Budget App</h1>
+	<p class="lead">You are not logged in</p>
 
-  <div class="row justify-content-center">
-   <div class="col-md-6">
-    <div class="card mt-4">
-     <div class="card-body">
-      <h5 class="card-title">New User?</h5>
-      <p class="card-text">Register to start managing your personal or family budget.</p>
-      <a href="{% url 'register-new-user' %}" class="btn btn-primary">Register</a>
-     </div>
-    </div>
-   </div>
-   <div class="col-md-6">
-    <div class="card mt-4">
-     <div class="card-body">
-      <h5 class="card-title">Already Registered?</h5>
-      <p class="card-text">Login to access your account.</p>
-      <a href="{% url 'login-user' %}" class="btn btn-primary">Login</a>
-     </div>
-    </div>
-   </div>
-  </div>
- {% endblock %}
+	<div class="row justify-content-center">
+		<div class="col-md-6">
+			<div class="card mt-4">
+				<div class="card-body">
+					<h5 class="card-title">New User?</h5>
+					<p class="card-text">Register to start managing your personal or family budget.</p>
+					<a href="{% url 'register-new-user' %}" class="btn btn-primary">Register</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-md-6">
+			<div class="card mt-4">
+				<div class="card-body">
+					<h5 class="card-title">Already Registered?</h5>
+					<p class="card-text">Login to access your account.</p>
+					<a href="{% url 'login-user' %}" class="btn btn-primary">Login</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

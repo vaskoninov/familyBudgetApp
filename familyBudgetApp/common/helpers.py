@@ -1,6 +1,4 @@
-
 from django.utils import timezone
-
 
 
 def get_current_year():
@@ -19,5 +17,3 @@ def get_previous_month_and_year(month, year):
 
 def get_users_from_family(family):
     return family.family_members.all().values_list('user', flat=True)
-
-

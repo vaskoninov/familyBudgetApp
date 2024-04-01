@@ -1,22 +1,22 @@
 {% extends 'base.html' %}
 {% block main_content %}
-  <div class="container text-center">
-    <h2 class="display-4 mt-5">Logout {{ user }}
-      {% if user.profile.family %}
-        from {{ user.profile.family }} 
-      {% endif %}
-    </h2>
-    <p class="lead">Do you want to really log out?</p>
-    <div class="row">
-      <div class="col-md-6">
-        <form action="{% url 'logout-user' %}" method="post" class="form-group">
-          {% csrf_token %}
-          <input class="btn btn-primary" type="submit" value="Yes! Log me out!">
-        </form>
-      </div>
-      <div class="col-md-6">
-        <a href="{{ referer_url }}" class="btn btn-danger">Back</a>
-      </div>
-    </div>
-  </div>
+	<div class="container text-center">
+		<h2 class="display-4 mt-5">Logout {{ user }}
+			{% if user.profile.family %}
+				from {{ user.profile.family }}
+			{% endif %}
+		</h2>
+		<p class="lead">Do you want to really log out?</p>
+		<div class="row">
+			<div class="col-md-6">
+				<form action="{% url 'logout-user' %}" method="post" class="form-group">
+					{% csrf_token %}
+					<input class="btn btn-primary" type="submit" value="Yes! Log me out!">
+				</form>
+			</div>
+			<div class="col-md-6">
+				<a href="{{ referer_url }}" class="btn btn-danger">Back</a>
+			</div>
+		</div>
+	</div>
 {% endblock %}

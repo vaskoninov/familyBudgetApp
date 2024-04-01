@@ -18,6 +18,7 @@ class YearlyBudget(models.Model):
     def __str__(self):
         return f"Yearly Budget for {self.year}"
 
+
 class MonthlyBudget(models.Model):
     balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)
     last_month_balance = models.DecimalField(max_digits=10, decimal_places=2, default=0)

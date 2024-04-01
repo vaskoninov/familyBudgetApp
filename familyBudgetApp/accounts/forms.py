@@ -36,5 +36,4 @@ class FamilyInvitationForm(forms.ModelForm):
         if invitee.profile.family:
             raise ValidationError('User already has a family.')
 
-        # If everything is fine, return the cleaned data
         return invitee_email

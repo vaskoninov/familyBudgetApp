@@ -22,10 +22,6 @@ class SearchMixin:
 
         return queryset
 
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     return self.apply_search_filter(queryset)
-
 
 class CategoryFilterMixin:
     def get_search_category(self):
@@ -40,10 +36,6 @@ class CategoryFilterMixin:
 
         return queryset
 
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     return self.apply_category_filter(queryset)
-
 
 class TagFilterMixin:
     def get_search_tag_id(self):
@@ -56,11 +48,6 @@ class TagFilterMixin:
             queryset = queryset.filter(tags__id=search_tag_id)
 
         return queryset
-
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     return self.apply_tag_filter(queryset)
-
 
 
 class UserIsCreatorMixin:
