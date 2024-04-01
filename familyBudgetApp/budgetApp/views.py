@@ -1,4 +1,5 @@
 from django.contrib.auth import mixins as auth_mixins
+from django.contrib.messages import views as messages_views
 from django.db.models import Sum
 from django.urls import reverse_lazy
 from django.views import generic as views
@@ -14,11 +15,12 @@ from familyBudgetApp.common.mixins import RefererURLMixin, SearchMixin, TagFilte
 
 # Create your views here.
 
-class CreateBudgetItemView(auth_mixins.LoginRequiredMixin, views.CreateView):
+class CreateBudgetItemView(auth_mixins.LoginRequiredMixin, messages_views.SuccessMessageMixin, views.CreateView):
     model = BudgetItem
     form_class = BudgetItemForm
     template_name = "budgetApp/create-new-budget-entry.html"
     success_url = reverse_lazy("index")
+    success_message = "Budget item - %(name)s - created successfully!"
 
     def form_valid(self, form):
         form.instance.user = self.request.user
@@ -31,21 +33,25 @@ class ViewBudgetItemDetails(auth_mixins.LoginRequiredMixin, RefererURLMixin, vie
     context_object_name = "budget_item"
 
 
-class UpdateBudgetItemView(auth_mixins.LoginRequiredMixin, UserIsCreatorMixin, RefererURLMixin, views.UpdateView):
+class UpdateBudgetItemView(auth_mixins.LoginRequiredMixin, UserIsCreatorMixin, RefererURLMixin,
+                           messages_views.SuccessMessageMixin, views.UpdateView):
     model = BudgetItem
     form_class = UpdateBudgetItemForm
     template_name = "budgetApp/update-budget-item.html"
     context_object_name = "budget_item"
     success_url = reverse_lazy("index")
+    success_message = "Budget item - %(name)s - updated successfully!"
 
 
-class DeleteBudgetItemView(auth_mixins.LoginRequiredMixin, UserIsCreatorMixin, RefererURLMixin, views.DeleteView):
+class DeleteBudgetItemView(auth_mixins.LoginRequiredMixin, UserIsCreatorMixin, RefererURLMixin,
+                           messages_views.SuccessMessageMixin, views.DeleteView):
     model = BudgetItem
     template_name = "budgetApp/delete-budget-item.html"
     success_url = reverse_lazy("index")
+    success_message = "Budget item - %(name)s - deleted successfully!"
 
 
-class AbstractBudgetItemListView(auth_mixins.LoginRequiredMixin, SearchMixin, TagFilterMixin, CategoryFilterMixin, 
+class AbstractBudgetItemListView(auth_mixins.LoginRequiredMixin, SearchMixin, TagFilterMixin, CategoryFilterMixin,
                                  views.ListView):
     model = BudgetItem
 
@@ -62,7 +68,6 @@ class AbstractBudgetItemListView(auth_mixins.LoginRequiredMixin, SearchMixin, Ta
         return context
 
     def get_queryset(self):
-
         queryset = super().get_queryset()
 
         queryset = self.apply_category_filter(queryset)
@@ -76,7 +81,6 @@ class BudgetItemListView(AbstractBudgetItemListView):
     template_name = "budgetApp/list-budget-items.html"
 
     def get_queryset(self):
-
         queryset = super().get_queryset()
         return queryset.filter(user=self.request.user)
 
@@ -85,7 +89,6 @@ class FamilyBudgetItemListAdminView(AbstractBudgetItemListView):
     template_name = "budgetApp/list-budget-items.html"
 
     def get_queryset(self):
-
         queryset = super().get_queryset()
         family = self.request.user.profile.family
         family_members = get_users_from_family(family)
@@ -175,12 +178,12 @@ class FamilyMonthlyBudgetAdminView(auth_mixins.LoginRequiredMixin, views.Templat
         year = self.kwargs.get('year')
         month = self.kwargs.get('month')
 
-        incomes = BudgetItem.objects.filter(user__in=family_members, item_type='INCOME', date__year=year, date__month=month)
-        expenses = BudgetItem.objects.filter(user__in=family_members, item_type='EXPENSE', date__year=year, date__month=month)
+        incomes = BudgetItem.objects.filter(user__in=family_members, item_type='INCOME', date__year=year,
+                                            date__month=month)
+        expenses = BudgetItem.objects.filter(user__in=family_members, item_type='EXPENSE', date__year=year,
+                                             date__month=month)
 
         context["incomes"] = incomes
         context["expenses"] = expenses
 
         return context
-
-

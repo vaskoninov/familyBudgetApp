@@ -34,14 +34,14 @@
 					</div>
 					<div class="card-footer d-flex flex-column flex-xl-row justify-content-around">
 						<a href="{% url 'user-profile-update' pk=user.pk %}"
-						   class="btn btn-primary mb-2 ">Update</a>
+						   class="btn btn-primary mb-2 button-space">Update</a>
 						{% if not user.profile.family %}
-							<a href="{% url 'create-family' %}" class="btn btn-success mb-2 ">Create Family</a>
+							<a href="{% url 'create-family' %}" class="btn btn-success mb-2 button-space">Create Family</a>
 						{% endif %}
-						<a href="{% url 'change-user-password' pk=user.pk %}" class="btn btn-warning mb-2 ">Change
+						<a href="{% url 'change-user-password' pk=user.pk %}" class="btn btn-warning mb-2 button-space">Change
 							Password</a>
-						<a href="{% url 'delete-user' pk=user.pk %}" class="btn btn-danger mb-2 ">Delete</a>
-						<a href="{{ referer_url }}" class="btn btn-secondary mb-2 ">Back</a>
+						<a href="{% url 'delete-user' pk=user.pk %}" class="btn btn-danger mb-2 button-space">Delete</a>
+						<a href="{{ referer_url }}" class="btn btn-secondary mb-2 button-space">Back</a>
 					</div>
 				</div>
 			</div>

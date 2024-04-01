@@ -3,6 +3,7 @@ from django.contrib.auth import forms as auth_forms
 from django.contrib.auth import get_user_model, update_session_auth_hash
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin, PermissionRequiredMixin
+from django.contrib.messages import views as messages_views
 from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.views import generic as views
@@ -16,11 +17,12 @@ from familyBudgetApp.common.mixins import RefererURLMixin
 UserModel = get_user_model()
 
 
-class RegisterNewAppUser(views.CreateView):
+class RegisterNewAppUser(messages_views.SuccessMessageMixin, views.CreateView):
     model = UserModel
     form_class = AppUserCreationForm
     template_name = "accounts/register-new-user.html"
     success_url = reverse_lazy('index')
+    success_message = "User - %(email)s - created successfully!"
 
 
 class UserLoginView(auth_views.LoginView):
@@ -51,10 +53,11 @@ class UserProfileView(LoginRequiredMixin, RefererURLMixin, views.DetailView):
         return context
 
 
-class ProfileUpdateView(LoginRequiredMixin, RefererURLMixin, views.UpdateView):
+class ProfileUpdateView(LoginRequiredMixin, RefererURLMixin, messages_views.SuccessMessageMixin, views.UpdateView):
     model = Profile
     fields = ['first_name', 'last_name', 'age', ]
     template_name = "accounts/user-profile-update.html"
+    success_message = "Profile updated successfully!"
 
     def get_object(self, queryset=None):
         return self.request.user.profile
@@ -63,9 +66,11 @@ class ProfileUpdateView(LoginRequiredMixin, RefererURLMixin, views.UpdateView):
         return reverse_lazy('user-details', kwargs={'pk': self.request.user.pk})
 
 
-class UserPasswordChangeView(LoginRequiredMixin, RefererURLMixin, auth_views.PasswordChangeView):
+class UserPasswordChangeView(LoginRequiredMixin, RefererURLMixin, messages_views.SuccessMessageMixin,
+                             auth_views.PasswordChangeView):
     form_class = auth_forms.PasswordChangeForm
     template_name = "accounts/change-user-password.html"
+    success_message = "Password changed successfully!"
 
     def get_success_url(self):
         user_id = self.request.user.pk
@@ -93,10 +98,11 @@ class UserDeleteView(LoginRequiredMixin, RefererURLMixin, UserPassesTestMixin, v
         return self.request.user
 
 
-class CreateFamily(LoginRequiredMixin, RefererURLMixin, views.CreateView):
+class CreateFamily(LoginRequiredMixin, RefererURLMixin, messages_views.SuccessMessageMixin, views.CreateView):
     model = Family
     fields = ['name', 'description', ]
     template_name = "accounts/create-family.html"
+    success_message = "Family - %(name)s created successfully!"
 
     def get_success_url(self):
         user_id = self.request.user.pk
@@ -230,7 +236,7 @@ class DeleteFamilyInvitationView(LoginRequiredMixin, RefererURLMixin, views.Dele
         return invitation
 
 
-class LeaveFamilyView(LoginRequiredMixin, views.UpdateView):
+class LeaveFamilyView(LoginRequiredMixin, RefererURLMixin, views.UpdateView):
     model = Profile
     fields = []
     template_name = 'accounts/leave-family.html'
@@ -255,14 +261,14 @@ class LeaveFamilyView(LoginRequiredMixin, views.UpdateView):
         return super().form_valid(form)
 
 
-class AdminRemoveFamilyUserView(LoginRequiredMixin, views.UpdateView):
+class AdminRemoveFamilyUserView(LoginRequiredMixin, RefererURLMixin, views.UpdateView):
     model = Profile
     fields = []
     template_name = 'accounts/remove-family-user.html'
 
     def get_object(self, queryset=None):
         """Return the user's profile that needs to be removed from the family."""
-        user_id = self.kwargs.get('user_id')
+        user_id = self.kwargs.get('pk')
         return get_object_or_404(Profile, user__id=user_id)
 
     def get_success_url(self):
@@ -278,3 +284,25 @@ class AdminRemoveFamilyUserView(LoginRequiredMixin, views.UpdateView):
         profile.save()
         messages.success(self.request, 'The user has been successfully removed from the family.')
         return super().form_valid(form)
+
+
+class AdminLeaveDeleteFamilyView(LoginRequiredMixin, RefererURLMixin, views.DeleteView):
+    model = Family
+    template_name = 'accounts/leave-delete-family.html'
+    success_url = reverse_lazy('index')
+
+    def get_object(self, queryset=None):
+        """Return the family that needs to be deleted."""
+        return self.request.user.profile.family
+
+    def delete(self, *args, **kwargs):
+        family = self.get_object()
+        if family.admin != self.request.user:
+            messages.info(self.request, 'You are not the admin of this family.')
+            return redirect(self.get_success_url())
+
+        Profile.objects.filter(family=family).update(family=None)
+        FamilyInvitation.objects.filter(family=family).delete()
+
+        messages.success(self.request, 'The family has been successfully deleted.')
+        return super().delete(*args, **kwargs)

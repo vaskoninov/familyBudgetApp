@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 {% load my_tags %}
 {% block page_title %}
-	Change Password
+	Delete Family
 {% endblock %}
 {% block main_content %}
 	<div class="container">
-		<h2 class="text-center mt-3">Change Password</h2>
-		<form method="post" class="form-group">
+		<h2 class="text-center mt-3">Leave Family</h2>
+		<form method="post" action="{% url 'leave-delete-family' pk=object.pk %}" class="form-group">
 			{% csrf_token %}
 			{% for field in form %}
 				<div class="form-group">
@@ -14,8 +14,9 @@
 					{{ field|add_class:"form-control" }}
 				</div>
 			{% endfor %}
-			<button type="submit" class="btn btn-primary float-end mt-3">Change Password</button>
+			<p>Are you sure you want to leave and delete your family?</p>
+			<button type="submit" class="btn btn-primary float-end mt-3">Confirm</button>
 		</form>
-		<a href="{{ referer_url }}" class="btn btn-secondary mt-3">Back</a>
+		<a href="{{ referer_url }}" class="btn btn-secondary mt-3">Go back</a>
 	</div>
 {% endblock %}

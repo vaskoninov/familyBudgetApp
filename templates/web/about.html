@@ -3,8 +3,68 @@
 {% block page_title %}Family Budget App About{% endblock %}
 
 {% block main_content %}
-	<h1>Welcome to the Family Budget App</h1>
-	
-	
+	<div class="container mt-5">
+		<div class="card">
+			<div class="card-header text-center">
+				<h1>About This App</h1>
+			</div>
+			<div class="card-body">
+				<p class="card-text">This is a Django Web App created for the Django Web course at SoftUni.</p>
+				<p class="card-text">The main idea of the project is to create an easy-to-use app to track a personal
+					and family budget.</p>
+
+				<h3 class="card-title text-center">App Characteristics</h3>
+				<ul class="list-group list-group-flush">
+					<!-- Add your list items here -->
+					<li class="list-group-item" data-bs-toggle="collapse" data-bs-target="#authentication">User registration and login
+						<ul class="collapse" id="authentication">
+							<li>Users can register and login</li>
+							<li>Users can reset their password</li>
+							<li>Users can change their password</li>
+							<li>Users can delete their accounts</li>
+						</ul>
+					</li>
+					<li class="list-group-item" data-bs-toggle="collapse" data-bs-target="#profile">User profile
+						<ul id="profile" class="collapse">
+							<li>User can see their profile</li>
+							<li>User can edit their profile</li>
+						</ul>
+					</li>
+					<li class="list-group-item" data-bs-toggle="collapse" data-bs-target="#user-budget">User budget
+						<ul id="user-budget" class="collapse">
+							<li>User is able to add, edit and delete incomes and expenses</li>
+							<li>After creation of a budget item, the monthly and yearly budgets are created or updated
+							</li>
+							<li>User is able to see a list of all incomes and expenses</li>
+							<li>User is able to see a list of all incomes and expenses for a specific month</li>
+							<li>User is able to see a list of all incomes and expenses for a specific category</li>
+							<li>User is able to add tags to incomes and expenses and filter by them</li>
+						</ul>
+					</li>
+					<li class="list-group-item" data-bs-toggle="collapse" data-bs-target="#user-options">User can create a Family budget
+						<ul id="user-options" class="collapse">
+							<li>User is able to send invitations to other users to join the family budget</li>
+							<li>User is able to see a list of all incomes and expenses for the family budget</li>
+							<li>User admin has additional options to see details regarding the family budget</li>
+						</ul>
+					</li>
+					<li class="list-group-item" data-bs-toggle="collapse" data-bs-target="#unauthorized">Unauthorized Users
+						<ul id="unauthorized" class="collapse">
+							<li>Unauthorized users can see the home page and the about page</li>
+							<li>Unauthorized users can register and login</li>
+						</ul>
+					</li>
+
+					<li class="list-group-item" data-bs-toggle="collapse" data-bs-target="#authorized">Authorized users are three types
+						<ul id="authorized" class="collapse">
+							<li>Regular user - can operate with their own personal budget</li>
+							<li>Family admin - have additional rights for administering a created family</li>
+							<li>Superuser - with access to Admin Panel</li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
 
 {% endblock %}

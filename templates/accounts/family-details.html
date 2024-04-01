@@ -1,5 +1,8 @@
 {% extends 'base.html' %}
 {% load account_tags %}
+{% block page_title %}
+	Family Details
+{% endblock %}
 {% block main_content %}
 	<div class="container">
 		<h2 class="text-center mt-3">{{ object|title }}</h2>
@@ -11,8 +14,12 @@
 				{% for member in family_members %}
 					<p class="card-text">{{ member }}
 						{% if user|has_group:"FamilyAdmin" %}
-							<a href="{% url 'remove-family-user' pk=member.pk %}" class="btn btn-danger float-end">Remove
-								from family</a>
+							{% if member == user %}
+								<a href="{% url 'leave-delete-family' pk=member.pk %}" class="btn btn-danger float-end">Leave and delete family</a>
+							{% else %}
+								<a href="{% url 'remove-family-user' pk=member.pk %}" class="btn btn-danger float-end">Remove
+									from family</a>
+							{% endif %}
 						{% endif %}
 					</p>
 				{% endfor %}

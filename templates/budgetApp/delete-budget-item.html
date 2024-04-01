@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
-
+{% block page_title %}
+	Delete Item
+{% endblock %}
 {% block main_content %}
     <h2>Delete {{ object.item_type|lower }}</h2>
     <form method="POST">

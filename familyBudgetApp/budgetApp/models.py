@@ -32,7 +32,7 @@ class MonthlyBudget(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.pk:
-            last_year, last_month = get_previous_month_and_year(self.month, self.yearly_budget.year)
+            last_month, last_year = get_previous_month_and_year(self.month, self.yearly_budget.year)
             last_month_budget = MonthlyBudget.objects.filter(
                 month=last_month, yearly_budget__year=last_year
             ).first()

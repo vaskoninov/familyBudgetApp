@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # My apps
     "familyBudgetApp.web.apps.WebConfig",
     "familyBudgetApp.accounts.apps.AccountsConfig",
     "familyBudgetApp.common.apps.CommonConfig",

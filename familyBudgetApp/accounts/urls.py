@@ -19,4 +19,5 @@ urlpatterns = (
     path('delete-invitation/<int:pk>/', views.DeleteFamilyInvitationView.as_view(), name='delete-invitation'),
     path('leave-family/<int:pk>/', views.LeaveFamilyView.as_view(), name='leave-family'),
     path('remove-family-user/<int:pk>/', views.AdminRemoveFamilyUserView.as_view(), name='remove-family-user'),
+    path('leave-delete-family/<int:pk>/', views.AdminLeaveDeleteFamilyView.as_view(), name='leave-delete-family'),
 )
