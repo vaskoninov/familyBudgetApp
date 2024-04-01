@@ -16,12 +16,13 @@
 <body>
 {% include "partials/header.html" %}
 {% if messages %}
-<div class="container mt-3">
-    {% for message in messages %}
-        <div class="alert alert-{{ message.tags }}">
-            {{ message }}
-        </div>
-    {% endfor %}
+	<div class="container mt-3">
+	{% for message in messages %}
+		<div class="alert alert-{{ message.tags }}">
+			{{ message }}
+			<button type="button" class="btn-close float-end" data-bs-dismiss="alert" aria-label="Close"></button>
+		</div>
+	{% endfor %}
 {% endif %}
 </div>
 {% block main_content %}
