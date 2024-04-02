@@ -4,6 +4,7 @@ from django.core.mail import send_mail
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+from familyBudgetApp import settings
 from familyBudgetApp.accounts.models import Profile, Family, FamilyInvitation
 
 UserModel = get_user_model()
@@ -37,7 +38,7 @@ def send_invitation_email(sender, instance, created, **kwargs):
                    f"If you would like to join the family, please login into the app!\n"
                    f"Best regards,\n"
                    f"Family Budget App Team")
-        from_email = 'vvninov@gmail.com'
+        from_email = settings.EMAIL_HOST_USER
         to_email = instance.invitee_email
 
         send_mail(subject, message, from_email, [to_email])
