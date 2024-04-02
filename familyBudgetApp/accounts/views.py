@@ -78,9 +78,8 @@ class UserPasswordChangeView(LoginRequiredMixin, RefererURLMixin, messages_views
 
     def form_valid(self, form):
         form.save()
-        # This updates the session to prevent the user from being logged out after changing their password
         update_session_auth_hash(self.request, form.user)
-        # messages.success(self.request, 'Your password was successfully updated!')
+        messages.success(self.request, 'Your password was successfully updated!')
         return super().form_valid(form)
 
 
