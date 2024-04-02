@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  web:
+    image: familybudgetapp
+    build: .
+    command: python manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    env_file:
+      - familyBudgetApp/.env
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "%6u6ul4etA"
+      POSTGRES_USER: postgres
+      POSTGRES_DB: budget_db
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./postgresql:/var/lib/postgresql/data
