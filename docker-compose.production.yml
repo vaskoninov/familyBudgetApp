@@ -1,0 +1,38 @@
+version: '3.4'
+
+services:
+  web:
+    image: vaskonin/familybudgetapp
+    build: .
+    command: gunicorn --bind=0.0.0.0:8000 familyBudgetApp.wsgi:application
+    ports:
+      - "8000:8000"
+    env_file:
+      - familyBudgetApp/.env
+    volumes:
+      - /tmp/familyBudgetApp/static:/app/static
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: "%6u6ul4etA"
+      POSTGRES_USER: postgres
+      POSTGRES_DB: budget_db
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - ./postgresql:/var/lib/postgresql/data
+  nginx:
+    image: nginx
+    ports:
+      - "81:80"
+      - "443:443"
+    volumes:
+      - /tmp/familyBudgetApp/static:/home/app/web/staticfiles
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/logs:/var/log/nginx
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro
+    links:
+      - web
