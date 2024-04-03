@@ -6,6 +6,7 @@ from django.dispatch import receiver
 
 from familyBudgetApp import settings
 from familyBudgetApp.accounts.models import Profile, Family, FamilyInvitation
+from familyBudgetApp.accounts.tasks import send_async_email
 
 UserModel = get_user_model()
 
@@ -41,4 +42,4 @@ def send_invitation_email(sender, instance, created, **kwargs):
         from_email = settings.EMAIL_HOST_USER
         to_email = instance.invitee_email
 
-        send_mail(subject, message, from_email, [to_email])
+        send_async_email.delay(subject, message, from_email, [to_email])

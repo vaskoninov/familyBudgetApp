@@ -11,6 +11,26 @@ services:
       - familyBudgetApp/.env
     volumes:
       - /tmp/familyBudgetApp/static:/app/static
+    depends_on:
+      - postgres
+      - redis
+
+  celery:
+    image: vaskonin/familybudgetapp
+    build: .
+    command: celery -A familyBudgetApp worker --loglevel=info
+    env_file:
+      - familyBudgetApp/.env
+    depends_on:
+      - web
+      - redis
+
+  redis:
+    image: redis:alpine
+    command: redis-server
+    ports:
+      - "6379:6379"
+
   postgres:
     image: postgres
     restart: always
@@ -23,6 +43,7 @@ services:
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
       - ./postgresql:/var/lib/postgresql/data
+
   nginx:
     image: nginx
     ports:
@@ -34,5 +55,5 @@ services:
       - ./nginx/logs:/var/log/nginx
       - ./certbot/www:/var/www/certbot/:ro
       - ./certbot/conf/:/etc/nginx/ssl/:ro
-    links:
+    depends_on:
       - web
