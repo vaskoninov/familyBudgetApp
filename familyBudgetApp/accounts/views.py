@@ -24,6 +24,12 @@ class RegisterNewAppUser(messages_views.SuccessMessageMixin, views.CreateView):
     success_url = reverse_lazy('index')
     success_message = "User - %(email)s - created successfully!"
 
+    def form_invalid(self, form):
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f"{error}")
+        return super().form_invalid(form)
+
 
 class UserLoginView(auth_views.LoginView):
     template_name = "accounts/login-user.html"
