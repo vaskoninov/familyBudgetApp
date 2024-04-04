@@ -1,4 +1,5 @@
 from django import forms
+from django.core.exceptions import ValidationError
 
 from familyBudgetApp.budgetApp.models import BudgetItem
 from familyBudgetApp.common.models import Tag
@@ -14,6 +15,12 @@ class BudgetItemForm(forms.ModelForm):
         widgets = {
             'date': forms.DateInput(attrs={'type': 'date'}),
         }
+
+    def clean_amount(self):
+        amount = self.cleaned_data.get('amount')
+        if amount is not None and amount < 0:
+            raise ValidationError("Amount must be a positive number or zero.")
+        return amount
 
     def save(self, commit=True):
         instance = super().save(commit=False)

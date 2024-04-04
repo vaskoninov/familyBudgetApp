@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import admin as auth_admin
 
 from .forms import AppUserCreationForm, AppUserChangeForm
-from .models import Profile
+from .models import Profile, FamilyInvitation
 
 UserModel = get_user_model()
 
@@ -38,4 +38,14 @@ class UserModelAdmin(auth_admin.UserAdmin):
 
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
-    pass
+    list_display = ('user', 'family', 'first_name', 'last_name', 'age')
+    search_fields = ('user__email', 'first_name', 'last_name')
+    list_filter = ('family', 'age')
+
+
+@admin.register(FamilyInvitation)
+class FamilyInvitation(admin.ModelAdmin):
+    list_display = ('invited_by', 'invitee_email', 'status')
+    list_filter = ('status', 'invited_by', 'invitee_email')
+    search_fields = ('invited_by', 'invitee_email', 'status')
+    ordering = ('-created_at',)

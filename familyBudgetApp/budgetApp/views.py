@@ -1,5 +1,7 @@
+from django.contrib import messages
 from django.contrib.auth import mixins as auth_mixins
 from django.contrib.messages import views as messages_views
+from django.core.exceptions import ValidationError
 from django.db.models import Sum
 from django.urls import reverse_lazy
 from django.views import generic as views
@@ -25,6 +27,13 @@ class CreateBudgetItemView(auth_mixins.LoginRequiredMixin, messages_views.Succes
     def form_valid(self, form):
         form.instance.user = self.request.user
         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        response = super().form_invalid(form)
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f"{error}")
+        return response
 
 
 class ViewBudgetItemDetails(auth_mixins.LoginRequiredMixin, RefererURLMixin, views.DetailView):
