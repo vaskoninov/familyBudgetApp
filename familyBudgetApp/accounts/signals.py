@@ -25,6 +25,8 @@ def add_user_as_family_admin(sender, instance, created, **kwargs):
     if created:
         family_admin_group = Group.objects.get(name='FamilyAdmin')
         instance.admin.groups.add(family_admin_group)
+        instance.admin.is_staff = True
+        instance.admin.save()
 
 
 @receiver(post_save, sender=FamilyInvitation)
