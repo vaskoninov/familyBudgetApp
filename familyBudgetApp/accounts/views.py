@@ -99,7 +99,6 @@ class UserDeleteView(LoginRequiredMixin, RefererURLMixin, UserPassesTestMixin, v
         return user == self.request.user
 
     def get_object(self, queryset=None):
-        """Override to use the user from request."""
         return self.request.user
 
 
@@ -176,7 +175,6 @@ class AcceptFamilyInvitationView(LoginRequiredMixin, RefererURLMixin, views.Upda
     template_name = 'accounts/accept-invitation.html'
 
     def get_object(self, queryset=None):
-        """Ensure the invitation exists and is for the current user."""
         invitation = super().get_object(queryset)
         if invitation.invitee_email != self.request.user.email:
             messages.info(self.request, "Invitation not found or not for this user.")
@@ -233,7 +231,6 @@ class DeleteFamilyInvitationView(LoginRequiredMixin, RefererURLMixin, views.Dele
         return reverse_lazy('user-profile', kwargs={"pk": user_id})
 
     def get_object(self, queryset=None):
-        """Ensure the invitation exists and is for the current user."""
         invitation = super().get_object(queryset)
         if invitation.invited_by.email != self.request.user.email:
             messages.info(self.request, "You did not send this invitation. You cannot delete it.")
@@ -247,7 +244,6 @@ class LeaveFamilyView(LoginRequiredMixin, RefererURLMixin, views.UpdateView):
     template_name = 'accounts/leave-family.html'
 
     def get_object(self, queryset=None):
-        """Return the current user's profile."""
         return self.request.user.profile
 
     def get_success_url(self):
@@ -272,7 +268,6 @@ class AdminRemoveFamilyUserView(LoginRequiredMixin, RefererURLMixin, views.Updat
     template_name = 'accounts/remove-family-user.html'
 
     def get_object(self, queryset=None):
-        """Return the user's profile that needs to be removed from the family."""
         user_id = self.kwargs.get('pk')
         return get_object_or_404(Profile, user__id=user_id)
 
@@ -297,7 +292,6 @@ class AdminLeaveDeleteFamilyView(LoginRequiredMixin, RefererURLMixin, views.Dele
     success_url = reverse_lazy('index')
 
     def get_object(self, queryset=None):
-        """Return the family that needs to be deleted."""
         return self.request.user.profile.family
 
     def delete(self, *args, **kwargs):

@@ -10,7 +10,6 @@ class YearlyBudgetAdmin(admin.ModelAdmin):
     list_filter = ('year', 'user')
 
 
-
 @admin.register(MonthlyBudget)
 class MonthlyBudgetAdmin(admin.ModelAdmin):
     list_display = ('month', 'user', 'yearly_budget', 'balance', 'last_month_balance')
@@ -22,4 +21,3 @@ class BudgetItemAdmin(admin.ModelAdmin):
     list_filter = ('item_type', 'monthly_budget', 'user', 'date')
     search_fields = ('name', 'description')
     readonly_fields = ('tags', 'date', 'user', 'monthly_budget')
-
